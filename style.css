@@ -399,6 +399,26 @@ footer .ri-discord-line {
     vertical-align: middle;
     letter-spacing: 0.5px;
 }
+.restart-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.restart-btn i {
+    font-size: 1.2em;
+}
+.restart-btn:hover, .restart-btn:active {
+    background: var(--accent-color);
+}
 @media (max-width: 600px) {
     html {
         font-size: 15px;
