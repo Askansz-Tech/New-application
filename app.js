@@ -285,7 +285,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const restartBtn = document.getElementById('restartAppBtn');
     if (restartBtn) {
         restartBtn.addEventListener('click', function() {
-            location.reload();
+            // Clear local storage and session storage
+            localStorage.clear();
+            sessionStorage.clear();
+            // Redirect to the main page (index.html)
+            window.location.href = 'index.html';
         });
     }
 });
