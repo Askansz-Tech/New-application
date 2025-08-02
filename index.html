@@ -233,6 +233,39 @@
     </nav>
 
     <script>
+    // Navigation Handling
+    document.addEventListener('DOMContentLoaded', () => {
+        // Navigation Event Listeners
+        const navItems = document.querySelectorAll('.tab-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active states from all nav items and pages
+                navItems.forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Add active state to clicked nav item
+                this.classList.add('active');
+                
+                // Get the target page
+                const pageId = this.getAttribute('data-page');
+                const targetPage = document.getElementById(pageId);
+                
+                // Activate target page
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+            });
+        });
+
         // App State Management
         const AppState = {
             darkMode: false,
@@ -249,9 +282,9 @@
                 const savedState = localStorage.getItem('appState');
                 if (savedState) {
                     const state = JSON.parse(savedState);
-                    this.darkMode = state.darkMode;
-                    this.notifications = state.notifications;
-                    this.sound = state.sound;
+                    this.darkMode = state.darkMode || false;
+                    this.notifications = state.notifications || false;
+                    this.sound = state.sound || false;
                 }
             },
             
@@ -264,62 +297,56 @@
             },
             
             applyInitialSettings() {
-                document.getElementById('darkModeToggle').checked = this.darkMode;
-                document.getElementById('notificationsToggle').checked = this.notifications;
-                document.getElementById('soundToggle').checked = this.sound;
+                // Dark Mode
+                document.body.classList.toggle('dark-mode', this.darkMode);
+                
+                // Toggle Switches
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                const notificationsToggle = document.getElementById('notificationsToggle');
+                const soundToggle = document.getElementById('soundToggle');
+                
+                if (darkModeToggle) darkModeToggle.checked = this.darkMode;
+                if (notificationsToggle) notificationsToggle.checked = this.notifications;
+                if (soundToggle) soundToggle.checked = this.sound;
             },
             
             setupEventListeners() {
                 // Dark Mode Toggle
-                document.getElementById('darkModeToggle').addEventListener('change', (e) => {
-                    this.darkMode = e.target.checked;
-                    document.body.classList.toggle('dark-mode', this.darkMode);
-                    this.saveState();
-                });
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                if (darkModeToggle) {
+                    darkModeToggle.addEventListener('change', (e) => {
+                        this.darkMode = e.target.checked;
+                        document.body.classList.toggle('dark-mode', this.darkMode);
+                        this.saveState();
+                    });
+                }
                 
                 // Notifications Toggle
-                document.getElementById('notificationsToggle').addEventListener('change', (e) => {
-                    this.notifications = e.target.checked;
-                    if (this.notifications && "Notification" in window) {
-                        Notification.requestPermission();
-                    }
-                    this.saveState();
-                });
+                const notificationsToggle = document.getElementById('notificationsToggle');
+                if (notificationsToggle) {
+                    notificationsToggle.addEventListener('change', (e) => {
+                        this.notifications = e.target.checked;
+                        if (this.notifications && "Notification" in window) {
+                            Notification.requestPermission();
+                        }
+                        this.saveState();
+                    });
+                }
                 
                 // Sound Toggle
-                document.getElementById('soundToggle').addEventListener('change', (e) => {
-                    this.sound = e.target.checked;
-                    this.saveState();
-                });
-                
-                // Page Navigation
-                document.querySelectorAll('.tab-item').forEach(item => {
-                    item.addEventListener('click', this.handleNavigation);
-                });
-            },
-            
-            handleNavigation(e) {
-                e.preventDefault();
-                
-                // Remove active states
-                document.querySelectorAll('.tab-item').forEach(navItem => {
-                    navItem.classList.remove('active');
-                });
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active');
-                });
-
-                // Add active states
-                const pageId = this.getAttribute('data-page');
-                this.classList.add('active');
-                document.getElementById(pageId).classList.add('active');
+                const soundToggle = document.getElementById('soundToggle');
+                if (soundToggle) {
+                    soundToggle.addEventListener('change', (e) => {
+                        this.sound = e.target.checked;
+                        this.saveState();
+                    });
+                }
             }
         };
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            AppState.init();
-        });
-    </script>
+        // Initialize App State
+        AppState.init();
+    });
+</script>
 </body>
 </html>
