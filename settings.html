@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="settings" class="page active animate-fade">
+            <div class="card">
+                <div class="card-header">
+                    <h2 id="settings-title">App Settings</h2>
+                    <i class="ri-settings-3-line"></i>
+                </div>
+                <div class="card-content">
+                    <div class="settings-category" id="appearance-category">Appearance</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="dark-mode-label">Dark Mode</span>
+                            <div class="settings-desc" id="dark-mode-desc">Switches the app between light and dark themes.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-category" id="notifications-category">Notifications</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="notifications-label">Notifications</span>
+                            <div class="settings-desc" id="notifications-desc">Enable or disable browser notifications.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notificationsToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="sound-label">Sound Effects</span>
+                            <div class="settings-desc" id="sound-desc">Toggle sound effects for actions.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-category" id="privacy-category">Privacy</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="local-storage-label">Local Storage</span>
+                            <div class="settings-desc" id="local-storage-desc">Allow the app to save your settings and data locally on your device.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="localStorageToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="cookies-label">Cookies</span>
+                            <div class="settings-desc" id="cookies-desc">Allow the app to use cookies for session management.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="cookiesToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="privacy-demo-label">Privacy Demo</span>
+                            <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="privacyDemoToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-category" id="language-category">Language</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="translation-label">Translate to Swedish</span>
+                            <div class="settings-desc" id="translation-desc">Switches the app language between English and Swedish.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="translationToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <i class="ri-home-line"></i>
+                <span id="nav-home">Home</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <i class="ri-settings-3-line"></i>
+                <span id="nav-settings">Settings</span>
+            </a>
+            <a href="bugs.html" class="nav-item">
+                <i class="ri-bug-line"></i>
+                <span id="nav-bugs">Bugs</span>
+            </a>
+            <a href="sites.html" class="nav-item">
+                <i class="ri-links-line"></i>
+                <span id="nav-sites">Our Sites</span>
+            </a>
+        </nav>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
