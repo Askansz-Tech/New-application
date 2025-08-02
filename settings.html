@@ -84,6 +84,28 @@
                     </div>
                     <div class="settings-item">
                         <div>
+                            <span id="analytics-label">Analytics</span>
+                            <span class="beta-tag">Beta</span>
+                            <div class="settings-desc" id="analytics-desc">Allow anonymous usage data to help improve the app.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="analyticsToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="error-report-label">Error Reporting</span>
+                            <span class="beta-tag">Beta</span>
+                            <div class="settings-desc" id="error-report-desc">Send crash and bug reports to help us fix issues faster.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="errorReportToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div>
                             <span id="privacy-demo-label">Privacy Demo</span>
                             <span class="beta-tag">Beta</span>
                             <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
@@ -92,6 +114,27 @@
                             <input type="checkbox" id="privacyDemoToggle">
                             <span class="toggle-slider"></span>
                         </label>
+                    </div>
+                    <div style="margin:16px 0; color:var(--text-secondary); font-size:0.97em;">
+                        <strong>Privacy Information:</strong>
+                        <br>
+                        You control what data is stored and shared. Toggle options above to enable or disable features. No personal data is ever sold or shared.
+                        <br>
+                        <a href="#" onclick="document.getElementById('privacy-details-modal').style.display='block';return false;" style="color:var(--primary-color);text-decoration:underline;">Learn more</a>
+                    </div>
+                    <!-- Privacy Details Modal (hidden by default) -->
+                    <div id="privacy-details-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:9999;">
+                        <div style="background:#fff; max-width:400px; margin:60px auto; padding:24px; border-radius:12px; color:#222;">
+                            <h3 style="margin-top:0;">Privacy Details</h3>
+                            <ul style="padding-left:18px;">
+                                <li><strong>Local Storage:</strong> Your settings are saved only on your device.</li>
+                                <li><strong>Cookies:</strong> Used for session management, not for tracking.</li>
+                                <li><strong>Analytics:</strong> Anonymous usage data, never personal info.</li>
+                                <li><strong>Error Reporting:</strong> Crash/bug reports help us improve the app.</li>
+                                <li><strong>Privacy Demo:</strong> Shows privacy info on the dashboard.</li>
+                            </ul>
+                            <button onclick="document.getElementById('privacy-details-modal').style.display='none';" style="margin-top:18px; padding:8px 16px; border:none; background:var(--primary-color); color:#fff; border-radius:6px; cursor:pointer;">Close</button>
+                        </div>
                     </div>
                     <div class="settings-category" id="language-category">Language</div>
                     <div class="settings-item">
