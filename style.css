@@ -340,6 +340,53 @@ footer .ri-discord-line {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+/* --- Our Sites Page --- */
+.sites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.site-card {
+    display: flex;
+    align-items: center;
+    background: var(--surface-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-subtle);
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+.site-card:hover, .site-card:active {
+    box-shadow: var(--shadow-medium);
+    background: rgba(0,122,255,0.07);
+}
+.site-icon {
+    font-size: 2em;
+    color: var(--primary-color);
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+.site-info {
+    flex: 1;
+}
+.site-title {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.08em;
+}
+.site-desc {
+    color: var(--text-secondary);
+    font-size: 0.97em;
+    margin-top: 2px;
+}
+.site-arrow {
+    font-size: 1.5em;
+    color: var(--accent-color);
+    margin-left: 10px;
+    flex-shrink: 0;
+}
 @media (max-width: 600px) {
     html {
         font-size: 15px;
@@ -383,6 +430,18 @@ footer .ri-discord-line {
     footer {
         padding: 14px 0;
         font-size: 14px;
+    }
+    .site-card {
+        padding: 12px 10px;
+        font-size: 0.97em;
+    }
+    .site-icon {
+        font-size: 1.5em;
+        margin-right: 10px;
+    }
+    .site-arrow {
+        font-size: 1.2em;
+        margin-left: 6px;
     }
 }
 @media (max-width: 400px) {
