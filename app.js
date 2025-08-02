@@ -35,7 +35,8 @@ const translations = {
         navSettings: "Settings",
         navBugs: "Bugs",
         navSites: "Our Sites",
-        bugsTitle: "Known Bugs & Issues"
+        bugsTitle: "Known Bugs & Issues",
+        restartAppBtn: "Restart Application" // Add this to the English section
     },
     sv: {
         dashboardTitle: "Instrumentpanel",
@@ -73,7 +74,8 @@ const translations = {
         navSettings: "Inställningar",
         navBugs: "Buggar",
         navSites: "Våra Sidor",
-        bugsTitle: "Kända buggar & problem"
+        bugsTitle: "Kända buggar & problem",
+        restartAppBtn: "Starta om applikationen" // Add this to the Swedish section
     }
 };
 
@@ -178,7 +180,6 @@ class AppStateManager {
     applyTranslation() {
         const lang = this.state.translation ? 'sv' : 'en';
         const t = translations[lang];
-        // Only update elements if they exist on the page
         [
             ['dashboard-title', t.dashboardTitle],
             ['dashboard-welcome', t.dashboardWelcome],
@@ -210,10 +211,18 @@ class AppStateManager {
             ['nav-settings', t.navSettings],
             ['nav-bugs', t.navBugs],
             ['nav-sites', t.navSites],
-            ['bugs-title', t.bugsTitle]
+            ['bugs-title', t.bugsTitle],
+            ['restartAppBtn', t.restartAppBtn], // Added restart button
         ].forEach(([id, value]) => {
             const el = document.getElementById(id);
-            if (el) el.textContent = value;
+            if (el) {
+                // If it's a button, set innerHTML to preserve icon
+                if (id === 'restartAppBtn') {
+                    el.innerHTML = `<i class="ri-refresh-line"></i> ${value}`;
+                } else {
+                    el.textContent = value;
+                }
+            }
         });
         // Privacy details
         const detailsList = document.getElementById('privacy-details');
