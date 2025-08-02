@@ -271,3 +271,12 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js');
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const restartBtn = document.getElementById('restartAppBtn');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', function() {
+            location.reload();
+        });
+    }
+});
