@@ -172,6 +172,84 @@ input:checked + .toggle-slider:before {
 .animate-fade {
     animation: fadeIn 0.5s ease;
 }
+/* --- Bugs Page Project Cards --- */
+.project-card {
+    background: var(--surface-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 22px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+.project-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 18px 20px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+.project-header i {
+    margin-right: 12px;
+    font-size: 1.5em;
+}
+.project-header .ri-arrow-down-s-line {
+    margin-left: auto;
+    font-size: 1.5em;
+    transition: transform 0.3s;
+}
+.project-card.expanded .project-header .ri-arrow-down-s-line {
+    transform: rotate(180deg);
+}
+.project-details {
+    display: none;
+    padding: 18px 20px;
+    background: var(--background-color);
+    color: var(--text-primary);
+    animation: fadeIn 0.4s;
+}
+.project-card.expanded .project-details {
+    display: block;
+}
+.bug-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.bug-list li {
+    background: var(--surface-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-subtle);
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--accent-color);
+}
+.bug-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+}
+.bug-title i {
+    margin-right: 8px;
+}
+.bug-status {
+    color: var(--accent-color);
+    font-size: 0.98em;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+}
+.bug-status i {
+    margin-right: 6px;
+}
+.project-desc {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+}
 @media (max-width: 600px) {
     .app-container {
         max-width: 100vw;
