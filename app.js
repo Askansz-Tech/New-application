@@ -247,6 +247,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('app-loader');
+    // Show loader only if not loaded before in this session
+    if (loader && !sessionStorage.getItem('appLoaded')) {
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+            sessionStorage.setItem('appLoaded', 'true');
+        }, 900); // Show loader for at least 900ms
+    } else if (loader) {
+        loader.style.display = 'none';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const appStateManager = new AppStateManager();
     appStateManager.init();
