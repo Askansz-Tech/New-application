@@ -1,1 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MyApp</title>
+    
+    <!-- PWA Manifest and Favicon -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- iOS Specific Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --background-color: #F2F2F7;
+            --secondary-background: #FFFFFF;
+            --text-color: #000000;
+            --primary-color: #007AFF;
+            --accent-color: #5856D6;
+            
+            /* Typography */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --base-font-size: 16px;
+        }
 
+        /* Dark Mode Colors */
+        body.dark-mode {
+            --background-color: #1C1C1E;
+            --secondary-background: #2C2C2E;
+            --text-color: #FFFFFF;
+            --primary-color: #0A84FF;
+            --accent-color: #5E5CE6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--secondary-background);
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-item.active {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        .page {
+            display: none;
+            padding: 20px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .settings-section {
+            background-color: var(--secondary-background);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <h1>Welcome to MyApp</h1>
+            <p>Explore amazing features!</p>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page">
+            <div class="settings-section">
+                <div class="settings-item">
+                    <span>Dark Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <span>Notifications</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notificationsToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <span>Sound</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="soundToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <h2>User Profile</h2>
+            <p>Manage your account settings</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <a href="#" class="tab-item active" data-page="home">
+                Home
+            </a>
+            <a href="#" class="tab-item" data-page="settings">
+                Settings
+            </a>
+            <a href="#" class="tab-item" data-page="profile">
+                Profile
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        class AppStateManager {
+            constructor() {
+                this.state = {
+                    darkMode: false,
+                    notifications: false,
+                    sound: false
+                };
+            }
+
+            init() {
+                this.loadState();
+                this.setupEventListeners();
+                this.applyInitialSettings();
+            }
+
+            loadState() {
+                try {
+                    const savedState = localStorage.getItem('appState');
+                    if (savedState) {
+                        const parsedState = JSON.parse(savedState);
+                        this.state = { ...this.state, ...parsedState };
+                    }
+                } catch (error) {
+                    console.error('Error loading app state:', error);
+                }
+            }
+
+            saveState() {
+                try {
+                    localStorage.setItem('appState', JSON.stringify(this.state));
+                } catch (error) {
+                    console.error('Error saving app state:', error);
+                }
+            }
+
+            applyInitialSettings() {
+                document.body.classList.toggle('dark-mode', this.state.darkMode);
+
+                ['darkModeToggle', 'notificationsToggle', 'soundToggle'].forEach(toggleId => {
+                    const toggle = document.getElementById(toggleId);
+                    if (toggle) {
+                        toggle.checked = this.state[this.getStateKeyFromToggleId(toggleId)];
+                    }
+                });
+            }
+
+            getStateKeyFromToggleId(toggleId) {
+                const mapping = {
+                    'darkModeToggle': 'darkMode',
+                    'notificationsToggle': 'notifications',
+                    'soundToggle': 'sound'
+                };
+                return mapping[toggleId];
+            }
+
+            setupEventListeners() {
+                const toggleHandlers = {
+                    'darkModeToggle': (checked) => {
+                        document.body.classList.toggle('dark-mode', checked);
+                    },
+                    'notificationsToggle': (checked) => {
+                        if (checked && "Notification" in window) {
+                            Notification.requestPermission().catch(console.error);
+                        }
+                    },
+                    'soundToggle': () => {}
+                };
+
+                ['darkModeToggle', 'notificationsToggle', 'soundToggle'].forEach(toggleId => {
+                    const toggle = document.getElementById(toggleId);
+                    if (toggle) {
+                        toggle.addEventListener('change', (e) => {
+                            const stateKey = this.getStateKeyFromToggleId(toggleId);
+                            this.state[stateKey] = e.target.checked;
+                            toggleHandlers[toggleId](e.target.checked);
+                            this.saveState();
+                        });
+                    }
+                });
+
+                const navItems = document.querySelectorAll('.tab-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', this.handleNavigation.bind(this));
+                });
+            }
+
+            handleNavigation(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.tab-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                const navItem = e.currentTarget;
+                const pageId = navItem.getAttribute('data-page');
+                navItem.classList.add('active');
+                document.getElementById(pageId).classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const appStateManager = new AppStateManager();
+            appStateManager.init();
+        });
+    </script>
+</body>
+</html>
