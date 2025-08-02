@@ -13,18 +13,24 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="MyApp">
     
-    <!-- Favicon and App Icons -->
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
-    <link rel="icon" type="image/png" href="/icons/icon-192x192.png">
-
     <style>
         :root {
             --primary-color: #007AFF;
             --background-color: #F2F2F7;
+            --secondary-background: #FFFFFF;
             --text-color: #000000;
+            --gray-color: #8E8E93;
             --tab-bar-height: 50px;
             --safe-area-top: env(safe-area-inset-top, 20px);
             --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            --background-color: #000000;
+            --secondary-background: #1C1C1E;
+            --text-color: #FFFFFF;
+            --gray-color: #8E8E93;
         }
 
         * {
@@ -39,42 +45,45 @@
             color: var(--text-color);
             padding-top: var(--safe-area-top);
             padding-bottom: calc(var(--safe-area-bottom) + var(--tab-bar-height));
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .app-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 15px;
         }
 
-        .nav-bar {
+        /* iOS-like Navigation Bar */
+        .tab-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             display: flex;
-            background-color: white;
-            border-top: 1px solid #E0E0E0;
+            background-color: var(--secondary-background);
+            border-top: 1px solid rgba(0,0,0,0.1);
             height: var(--tab-bar-height);
             padding-bottom: var(--safe-area-bottom);
+            box-shadow: 0 -1px 7px rgba(0,0,0,0.1);
         }
 
-        .nav-item {
+        .tab-item {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: #8E8E93;
+            color: var(--gray-color);
             padding: 5px;
+            transition: color 0.3s;
         }
 
-        .nav-item.active {
+        .tab-item.active {
             color: var(--primary-color);
         }
 
-        .nav-item i {
+        .tab-item-icon {
             font-size: 22px;
             margin-bottom: 3px;
         }
@@ -88,20 +97,76 @@
             display: block;
         }
 
-        .card {
-            background-color: white;
+        /* iOS-like Settings Styles */
+        .settings-section {
+            background-color: var(--secondary-background);
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 15px;
+            overflow: hidden;
         }
 
-        .settings-toggle {
+        .settings-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #E0E0E0;
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .header {
+            background-color: var(--secondary-background);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -109,60 +174,136 @@
     <div class="app-container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <h1>Welcome to MyApp</h1>
-            <div class="card">
-                <p>This is a sample Progressive Web App for iOS</p>
+            <div class="header">
+                <h1>Home</h1>
+            </div>
+            <div class="content">
+                <p style="padding: 15px;">Welcome to your iOS-style Progressive Web App!</p>
             </div>
         </div>
 
         <!-- Explore Page -->
         <div id="explore" class="page">
-            <h2>Explore</h2>
-            <div class="card">
-                <p>Discover new features and content</p>
+            <div class="header">
+                <h1>Explore</h1>
+            </div>
+            <div class="content">
+                <p style="padding: 15px;">Discover new features and content</p>
             </div>
         </div>
 
         <!-- Settings Page -->
         <div id="settings" class="page">
-            <h2>Settings</h2>
-            <div class="card">
-                <div class="settings-toggle">
+            <div class="header">
+                <h1>Settings</h1>
+            </div>
+            
+            <div class="settings-section">
+                <div class="settings-item">
                     <span>Dark Mode</span>
-                    <input type="checkbox" id="darkModeToggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
-                <div class="settings-toggle">
+                
+                <div class="settings-item">
                     <span>Notifications</span>
-                    <input type="checkbox" id="notificationsToggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notificationsToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="settings-item">
+                    <span>Sound</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="soundToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="settings-item">
+                    <span>Account</span>
+                    <span>→</span>
+                </div>
+                <div class="settings-item">
+                    <span>Privacy</span>
+                    <span>→</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <a href="#" class="nav-item active" data-page="home">
-            <i>🏠</i>
+    <!-- iOS-like Tab Bar -->
+    <nav class="tab-bar">
+        <a href="#" class="tab-item active" data-page="home">
+            <div class="tab-item-icon">🏠</div>
             Home
         </a>
-        <a href="#" class="nav-item" data-page="explore">
-            <i>🔍</i>
+        <a href="#" class="tab-item" data-page="explore">
+            <div class="tab-item-icon">🔍</div>
             Explore
         </a>
-        <a href="#" class="nav-item" data-page="settings">
-            <i>⚙️</i>
+        <a href="#" class="tab-item" data-page="settings">
+            <div class="tab-item-icon">⚙️</div>
             Settings
         </a>
     </nav>
 
     <script>
+        // App State Management
+        const AppState = {
+            darkMode: false,
+            notifications: false,
+            sound: false,
+            
+            // Save state to local storage
+            saveState() {
+                localStorage.setItem('appState', JSON.stringify({
+                    darkMode: this.darkMode,
+                    notifications: this.notifications,
+                    sound: this.sound
+                }));
+            },
+            
+            // Load state from local storage
+            loadState() {
+                const savedState = localStorage.getItem('appState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    this.darkMode = state.darkMode;
+                    this.notifications = state.notifications;
+                    this.sound = state.sound;
+                    
+                    // Apply saved settings
+                    this.applySettings();
+                }
+            },
+            
+            // Apply current settings
+            applySettings() {
+                // Dark Mode
+                document.body.classList.toggle('dark-mode', this.darkMode);
+                document.getElementById('darkModeToggle').checked = this.darkMode;
+                
+                // Notifications (you'd implement actual notification logic here)
+                document.getElementById('notificationsToggle').checked = this.notifications;
+                
+                // Sound (you'd implement actual sound logic here)
+                document.getElementById('soundToggle').checked = this.sound;
+            }
+        };
+
         // Page Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
+        document.querySelectorAll('.tab-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 
                 // Remove active states
-                document.querySelectorAll('.nav-item').forEach(navItem => {
+                document.querySelectorAll('.tab-item').forEach(navItem => {
                     navItem.classList.remove('active');
                 });
                 document.querySelectorAll('.page').forEach(page => {
@@ -176,15 +317,32 @@
             });
         });
 
-        // Dark Mode Toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
+        // Settings Toggles
+        document.getElementById('darkModeToggle').addEventListener('change', (e) => {
+            AppState.darkMode = e.target.checked;
+            AppState.applySettings();
+            AppState.saveState();
         });
-    </script>
 
-    <!-- Service Worker for PWA -->
-    <script>
+        document.getElementById('notificationsToggle').addEventListener('change', (e) => {
+            AppState.notifications = e.target.checked;
+            AppState.saveState();
+            
+            // Request notification permissions
+            if (e.target.checked && "Notification" in window) {
+                Notification.requestPermission();
+            }
+        });
+
+        document.getElementById('soundToggle').addEventListener('change', (e) => {
+            AppState.sound = e.target.checked;
+            AppState.saveState();
+        });
+
+        // Load saved state on startup
+        AppState.loadState();
+
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
