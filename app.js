@@ -36,7 +36,11 @@ const translations = {
         navBugs: "Bugs",
         navSites: "Our Sites",
         bugsTitle: "Known Bugs & Issues",
-        restartAppBtn: "Restart Application" // Add this to the English section
+        restartAppBtn: "Restart Application", // Add this to the English section
+        analyticsLabel: "Analytics",
+        analyticsDesc: "Allow anonymous usage data to help improve the app.",
+        errorReportLabel: "Error Reporting",
+        errorReportDesc: "Send crash and bug reports to help us fix issues faster."
     },
     sv: {
         dashboardTitle: "Instrumentpanel",
@@ -75,7 +79,11 @@ const translations = {
         navBugs: "Buggar",
         navSites: "Våra Sidor",
         bugsTitle: "Kända buggar & problem",
-        restartAppBtn: "Starta om applikationen" // Add this to the Swedish section
+        restartAppBtn: "Starta om applikationen", // Add this to the Swedish section
+        analyticsLabel: "Analys",
+        analyticsDesc: "Tillåt anonym användningsdata för att förbättra appen.",
+        errorReportLabel: "Felsökning",
+        errorReportDesc: "Skicka krascher och buggrapporter för att hjälpa oss åtgärda problem snabbare."
     }
 };
 
@@ -88,7 +96,9 @@ class AppStateManager {
             translation: false,
             privacyDemo: false,
             localStorage: true,
-            cookies: true
+            cookies: true,
+            analytics: false,      // NEW
+            errorReport: false     // NEW
         };
     }
     init() {
@@ -127,7 +137,9 @@ class AppStateManager {
             { id: 'translationToggle', key: 'translation' },
             { id: 'privacyDemoToggle', key: 'privacyDemo' },
             { id: 'localStorageToggle', key: 'localStorage' },
-            { id: 'cookiesToggle', key: 'cookies' }
+            { id: 'cookiesToggle', key: 'cookies' },
+            { id: 'analyticsToggle', key: 'analytics' },         // NEW
+            { id: 'errorReportToggle', key: 'errorReport' }      // NEW
         ].forEach(toggle => {
             const element = document.getElementById(toggle.id);
             if (element) element.checked = this.state[toggle.key];
@@ -166,6 +178,14 @@ class AppStateManager {
         });
         // Cookies (demo only)
         this.addToggleListener('cookiesToggle', 'cookies');
+        // Analytics (demo only)
+        this.addToggleListener('analyticsToggle', 'analytics', () => {
+            // Here you could enable/disable analytics scripts if implemented
+        });
+        // Error Reporting (demo only)
+        this.addToggleListener('errorReportToggle', 'errorReport', () => {
+            // Here you could enable/disable error reporting scripts if implemented
+        });
     }
     addToggleListener(elementId, stateKey, callback) {
         const el = document.getElementById(elementId);
@@ -212,11 +232,14 @@ class AppStateManager {
             ['nav-bugs', t.navBugs],
             ['nav-sites', t.navSites],
             ['bugs-title', t.bugsTitle],
-            ['restartAppBtn', t.restartAppBtn], // Added restart button
+            ['restartAppBtn', t.restartAppBtn],
+            ['analytics-label', t.analyticsLabel],         // NEW
+            ['analytics-desc', t.analyticsDesc],           // NEW
+            ['error-report-label', t.errorReportLabel],    // NEW
+            ['error-report-desc', t.errorReportDesc]       // NEW
         ].forEach(([id, value]) => {
             const el = document.getElementById(id);
             if (el) {
-                // If it's a button, set innerHTML to preserve icon
                 if (id === 'restartAppBtn') {
                     el.innerHTML = `<i class="ri-refresh-line"></i> ${value}`;
                 } else {
