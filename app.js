@@ -232,6 +232,21 @@ class AppStateManager {
     }
 }
 
+// --- Bugs Page Expand/Collapse Logic ---
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.project-header').forEach(header => {
+        header.addEventListener('click', function() {
+            document.querySelectorAll('.project-card').forEach(card => {
+                if (card.contains(header)) {
+                    card.classList.toggle('expanded');
+                } else {
+                    card.classList.remove('expanded');
+                }
+            });
+        });
+    });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const appStateManager = new AppStateManager();
     appStateManager.init();
