@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Our Sites</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="sites" class="page active animate-fade">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Our Sites</h2>
+                    <i class="ri-links-line"></i>
+                </div>
+                <div class="card-content">
+                    <ul style="list-style:none; padding:0;">
+                        <li style="margin-bottom:16px;">
+                            <a href="https://example.com" target="_blank" style="display:flex;align-items:center;text-decoration:none;color:var(--primary-color);font-size:17px;">
+                                <i class="ri-global-line" style="margin-right:8px;"></i>
+                                Example.com
+                            </a>
+                            <div style="color:var(--text-secondary);font-size:13px;margin-left:32px;">A demo site for testing.</div>
+                        </li>
+                        <li style="margin-bottom:16px;">
+                            <a href="https://github.com" target="_blank" style="display:flex;align-items:center;text-decoration:none;color:var(--primary-color);font-size:17px;">
+                                <i class="ri-github-fill" style="margin-right:8px;"></i>
+                                GitHub
+                            </a>
+                            <div style="color:var(--text-secondary);font-size:13px;margin-left:32px;">Open source code hosting.</div>
+                        </li>
+                        <!-- Add more sites here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <i class="ri-home-line"></i>
+                <span id="nav-home">Home</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="ri-settings-3-line"></i>
+                <span id="nav-settings">Settings</span>
+            </a>
+            <a href="bugs.html" class="nav-item">
+                <i class="ri-bug-line"></i>
+                <span id="nav-bugs">Bugs</span>
+            </a>
+            <a href="sites.html" class="nav-item active">
+                <i class="ri-links-line"></i>
+                <span id="nav-sites">Our Sites</span>
+            </a>
+        </nav>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
