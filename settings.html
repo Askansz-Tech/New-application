@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007AFF">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="apple-touch-icon" href="icon-192.png">
 </head>
@@ -21,6 +21,13 @@
                     <i class="ri-settings-3-line"></i>
                 </div>
                 <div class="card-content">
+                    <!-- Version info -->
+                    <div style="text-align:right; color:var(--accent-color); font-size:0.98em; font-weight:500; margin-bottom:6px;">
+                        <i class="ri-information-line"></i> Current version 0.0.3 Beta
+                    </div>
+                    <div style="text-align:right; color:var(--text-secondary); font-size:13px; margin-bottom:18px;">
+                        &copy; 2025-2027 Pixel Heaven
+                    </div>
                     <div class="settings-category" id="appearance-category">Appearance</div>
                     <div class="settings-item">
                         <div>
@@ -36,6 +43,7 @@
                     <div class="settings-item">
                         <div>
                             <span id="notifications-label">Notifications</span>
+                            <span class="beta-tag">Beta</span>
                             <div class="settings-desc" id="notifications-desc">Enable or disable browser notifications.</div>
                         </div>
                         <label class="toggle-switch">
@@ -77,6 +85,7 @@
                     <div class="settings-item">
                         <div>
                             <span id="privacy-demo-label">Privacy Demo</span>
+                            <span class="beta-tag">Beta</span>
                             <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
                         </div>
                         <label class="toggle-switch">
@@ -88,6 +97,7 @@
                     <div class="settings-item">
                         <div>
                             <span id="translation-label">Translate to Swedish</span>
+                            <span class="beta-tag">Beta</span>
                             <div class="settings-desc" id="translation-desc">Switches the app language between English and Swedish.</div>
                         </div>
                         <label class="toggle-switch">
