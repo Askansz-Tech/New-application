@@ -1,436 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>MyApp</title>
-    
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            /* Light Mode Colors */
-            --background-color: #F4F6F9;
-            --surface-color: #FFFFFF;
-            --text-primary: #1A1A1A;
-            --text-secondary: #666666;
-            --primary-color: #007AFF;
-            --accent-color: #5856D6;
-            --border-color: #E0E0E0;
-            
-            /* Typography */
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            --base-font-size: 16px;
-            
-            /* Shadows and Effects */
-            --shadow-subtle: 0 4px 6px rgba(0,0,0,0.05);
-            --shadow-medium: 0 10px 20px rgba(0,0,0,0.1);
-        }
+<!-- Icons -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
-        /* Dark Mode */
-        body.dark-mode {
-            --background-color: #121212;
-            --surface-color: #1E1E1E;
-            --text-primary: #FFFFFF;
-            --text-secondary: #A0A0A0;
-            --primary-color: #0A84FF;
-            --accent-color: #5E5CE6;
-            --border-color: #333333;
-        }
+<style>
+    :root {
+        /* Light Mode Colors */
+        --background-color: #F4F6F9;
+        --surface-color: #FFFFFF;
+        --text-primary: #1A1A1A;
+        --text-secondary: #666666;
+        --primary-color: #007AFF;
+        --accent-color: #5856D6;
+        --border-color: #E0E0E0;
+        
+        /* Typography */
+        --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        --base-font-size: 16px;
+        
+        /* Shadows and Effects */
+        --shadow-subtle: 0 4px 6px rgba(0,0,0,0.05);
+        --shadow-medium: 0 10px 20px rgba(0,0,0,0.1);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-family);
-            -webkit-tap-highlight-color: transparent;
-        }
+    /* Dark Mode */
+    body.dark-mode {
+        --background-color: #121212;
+        --surface-color: #1E1E1E;
+        --text-primary: #FFFFFF;
+        --text-secondary: #A0A0A0;
+        --primary-color: #0A84FF;
+        --accent-color: #5E5CE6;
+        --border-color: #333333;
+    }
 
-        body {
-            background-color: var(--background-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background-color 0.3s ease;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-family);
+        -webkit-tap-highlight-color: transparent;
+    }
 
-        .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            padding-bottom: 80px;
-        }
+    body {
+        background-color: var(--background-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+        transition: background-color 0.3s ease;
+    }
 
-        /* Modern Card Design */
-        .card {
-            background-color: var(--surface-color);
-            border-radius: 16px;
-            box-shadow: var(--shadow-subtle);
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .app-container {
+        max-width: 480px;
+        margin: 0 auto;
+        padding-bottom: 80px;
+    }
 
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: var(--shadow-medium);
-        }
+    /* Modern Card Design */
+    .card {
+        background-color: var(--surface-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow-subtle);
+        margin-bottom: 16px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: var(--shadow-medium);
+    }
 
-        .card-content {
-            padding: 16px;
-        }
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+    }
 
-        /* Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--surface-color);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            border-top: 1px solid var(--border-color);
-            z-index: 1000;
-        }
+    .card-content {
+        padding: 16px;
+    }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
-        }
+    /* Navigation */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--surface-color);
+        display: flex;
+        justify-content: space-around;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        border-top: 1px solid var(--border-color);
+        z-index: 1000;
+    }
 
-        .nav-item i {
-            font-size: 24px;
-            margin-bottom: 4px;
-        }
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+    }
 
-        .nav-item.active {
-            color: var(--primary-color);
-        }
+    .nav-item i {
+        font-size: 24px;
+        margin-bottom: 4px;
+    }
 
-        /* Settings Styles */
-        .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .nav-item.active {
+        color: var(--primary-color);
+    }
 
-        .settings-item:last-child {
-            border-bottom: none;
-        }
+    /* Settings Styles */
+    .settings-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 28px;
-        }
+    .settings-item:last-child {
+        border-bottom: none;
+    }
 
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+    }
 
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #CCCCCC;
-            transition: .4s;
-            border-radius: 34px;
-        }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 24px;
-            width: 24px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #CCCCCC;
+        transition: .4s;
+        border-radius: 34px;
+    }
 
-        input:checked + .toggle-slider {
-            background-color: var(--primary-color);
-        }
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 24px;
+        width: 24px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
 
-        input:checked + .toggle-slider:before {
-            transform: translateX(22px);
-        }
+    input:checked + .toggle-slider {
+        background-color: var(--primary-color);
+    }
 
-        /* Utility Classes */
-        .page {
-            display: none;
-        }
+    input:checked + .toggle-slider:before {
+        transform: translateX(22px);
+    }
 
-        .page.active {
-            display: block;
-        }
+    /* Utility Classes */
+    .page {
+        display: none;
+    }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .page.active {
+        display: block;
+    }
 
-        .animate-fade {
-            animation: fadeIn 0.5s ease;
-        }
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <!-- Home Page -->
-        <div id="home" class="page active animate-fade">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Dashboard</h2>
-                    <i class="ri-dashboard-line"></i>
-                </div>
-                <div class="card-content">
-                    <p>Welcome to your personal dashboard. Stay updated with your latest activities.</p>
-                </div>
-            </div>
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-            <div class="card">
-                <div class="card-header">
-                    <h3>Quick Actions</h3>
-                    <i class="ri-apps-line"></i>
-                </div>
-                <div class="card-content">
-                    <div style="display: flex; justify-content: space-between;">
-                        <button style="background-color: var(--primary-color); color: white; border: none; padding: 10px 15px; border-radius: 8px;">
-                            New Task
-                        </button>
-                        <button style="background-color: var(--accent-color); color: white; border: none; padding: 10px 15px; border-radius: 8px;">
-                            Quick Note
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Page -->
-        <div id="settings" class="page animate-fade">
-            <div class="card">
-                <div class="card-header">
-                    <h2>App Settings</h2>
-                    <i class="ri-settings-3-line"></i>
-                </div>
-                <div class="card-content">
-                    <div class="settings-item">
-                        <span>Dark Mode</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="darkModeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <span>Notifications</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="notificationsToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <span>Sound Effects</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="soundToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Profile Page -->
-        <div id="profile" class="page animate-fade">
-            <div class="card">
-                <div class="card-header">
-                    <h2>User Profile</h2>
-                    <i class="ri-user-line"></i>
-                </div>
-                <div class="card-content">
-                    <div style="text-align: center; margin-bottom: 16px;">
-                        <img src="https://via.placeholder.com/100" style="border-radius: 50%; width: 100px; height: 100px;">
-                        <h3 style="margin-top: 10px;">John Doe</h3>
-                        <p style="color: var(--text-secondary);">Software Developer</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active" data-page="home">
-                <i class="ri-home-line"></i>
-                Home
-            </a>
-            <a href="#" class="nav-item" data-page="settings">
-                <i class="ri-settings-3-line"></i>
-                Settings
-            </a>
-            <a href="#" class="nav-item" data-page="profile">
-                <i class="ri-user-line"></i>
-                Profile
-            </a>
-        </nav>
-    </div>
-
-    <script>
-        class AppStateManager {
-            constructor() {
-                // Initialize state with default values
-                this.state = {
-                    darkMode: false,
-                    notifications: false,
-                    sound: false
-                };
-            }
-
-            // Initialize the app state
-            init() {
-                // Load saved state from localStorage
-                this.loadState();
-                
-                // Setup event listeners for toggles and navigation
-                this.setupEventListeners();
-                
-                // Apply initial settings based on saved state
-                this.applyInitialSettings();
-            }
-
-            // Load state from localStorage
-            loadState() {
-                try {
-                    const savedState = localStorage.getItem('appState');
-                    if (savedState) {
-                        const parsedState = JSON.parse(savedState);
-                        this.state = { ...this.state, ...parsedState };
-                    }
-                } catch (error) {
-                    console.error('Error loading app state:', error);
-                }
-            }
-
-            // Save current state to localStorage
-            saveState() {
-                try {
-                    localStorage.setItem('appState', JSON.stringify(this.state));
-                } catch (error) {
-                    console.error('Error saving app state:', error);
-                }
-            }
-
-            // Apply initial settings when app loads
-            applyInitialSettings() {
-                // Toggle dark mode based on saved state
-                document.body.classList.toggle('dark-mode', this.state.darkMode);
-
-                // Set toggle states for each setting
-                const toggles = [
-                    { id: 'darkModeToggle', key: 'darkMode' },
-                    { id: 'notificationsToggle', key: 'notifications' },
-                    { id: 'soundToggle', key: 'sound' }
-                ];
-
-                toggles.forEach(toggle => {
-                    const element = document.getElementById(toggle.id);
-                    if (element) {
-                        element.checked = this.state[toggle.key];
-                    }
-                });
-            }
-
-            // Setup event listeners for toggles and navigation
-            setupEventListeners() {
-                // Dark Mode Toggle
-                const darkModeToggle = document.getElementById('darkModeToggle');
-                if (darkModeToggle) {
-                    darkModeToggle.addEventListener('change', (e) => {
-                        this.state.darkMode = e.target.checked;
-                        document.body.classList.toggle('dark-mode', this.state.darkMode);
-                        this.saveState();
-                    });
-                }
-
-                // Notifications Toggle
-                const notificationsToggle = document.getElementById('notificationsToggle');
-                if (notificationsToggle) {
-                    notificationsToggle.addEventListener('change', (e) => {
-                        this.state.notifications = e.target.checked;
-                        
-                        // Request notification permission if enabled
-                        if (this.state.notifications && "Notification" in window) {
-                            Notification.requestPermission().catch(console.error);
-                        }
-                        
-                        this.saveState();
-                    });
-                }
-
-                // Sound Toggle
-                const soundToggle = document.getElementById('soundToggle');
-                if (soundToggle) {
-                    soundToggle.addEventListener('change', (e) => {
-                        this.state.sound = e.target.checked;
-                        this.saveState();
-                    });
-                }
-
-                // Navigation Items
-                const navItems = document.querySelectorAll('.nav-item');
-                navItems.forEach(item => {
-                    item.addEventListener('click', this.handleNavigation.bind(this));
-                });
-            }
-
-            // Handle navigation between pages
-            handleNavigation(e) {
-                e.preventDefault();
-                
-                // Remove active states from all nav items and pages
-                document.querySelectorAll('.nav-item').forEach(navItem => {
-                    navItem.classList.remove('active');
-                });
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active');
-                });
-
-                // Add active state to clicked nav item and corresponding page
-                const navItem = e.currentTarget;
-                const pageId = navItem.getAttribute('data-page');
-                
-                navItem.classList.add('active');
-                document.getElementById(pageId).classList.add('active');
-            }
-        }
-
-        // Initialize app when DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            const appStateManager = new AppStateManager();
-            appStateManager.init();
-        });
-    </script>
-</body>
-</html>
+    .animate-fade {
+        animation: fadeIn 0.5s ease;
+    }
+</style>
