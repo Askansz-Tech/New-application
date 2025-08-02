@@ -303,6 +303,43 @@ footer .ri-discord-line {
     font-size: 1.3em;
     vertical-align: middle;
 }
+/* --- App Loader --- */
+.loader-overlay {
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s;
+}
+.loader-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-size: 1.3em;
+    animation: loaderFadeIn 0.7s;
+}
+.loader-spinner i {
+    font-size: 3em;
+    margin-bottom: 16px;
+    animation: loaderSpin 1.2s linear infinite;
+}
+.loader-text {
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+@keyframes loaderSpin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+@keyframes loaderFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 @media (max-width: 600px) {
     html {
         font-size: 15px;
