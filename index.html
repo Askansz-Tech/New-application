@@ -1,192 +1,213 @@
-<!-- Icons -->
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MyApp</title>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Your style block here -->
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --background-color: #F4F6F9;
+            --surface-color: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --primary-color: #007AFF;
+            --accent-color: #5856D6;
+            --border-color: #E0E0E0;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --base-font-size: 16px;
+            
+            /* Shadows and Effects */
+            --shadow-subtle: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-medium: 0 10px 20px rgba(0,0,0,0.1);
+        }
 
-<style>
-    :root {
-        /* Light Mode Colors */
-        --background-color: #F4F6F9;
-        --surface-color: #FFFFFF;
-        --text-primary: #1A1A1A;
-        --text-secondary: #666666;
-        --primary-color: #007AFF;
-        --accent-color: #5856D6;
-        --border-color: #E0E0E0;
-        
-        /* Typography */
-        --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        --base-font-size: 16px;
-        
-        /* Shadows and Effects */
-        --shadow-subtle: 0 4px 6px rgba(0,0,0,0.05);
-        --shadow-medium: 0 10px 20px rgba(0,0,0,0.1);
-    }
+        /* Dark Mode */
+        body.dark-mode {
+            --background-color: #121212;
+            --surface-color: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --primary-color: #0A84FF;
+            --accent-color: #5E5CE6;
+            --border-color: #333333;
+        }
 
-    /* Dark Mode */
-    body.dark-mode {
-        --background-color: #121212;
-        --surface-color: #1E1E1E;
-        --text-primary: #FFFFFF;
-        --text-secondary: #A0A0A0;
-        --primary-color: #0A84FF;
-        --accent-color: #5E5CE6;
-        --border-color: #333333;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: var(--font-family);
-        -webkit-tap-highlight-color: transparent;
-    }
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease;
+        }
 
-    body {
-        background-color: var(--background-color);
-        color: var(--text-primary);
-        line-height: 1.6;
-        transition: background-color 0.3s ease;
-    }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
 
-    .app-container {
-        max-width: 480px;
-        margin: 0 auto;
-        padding-bottom: 80px;
-    }
+        /* Modern Card Design */
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    /* Modern Card Design */
-    .card {
-        background-color: var(--surface-color);
-        border-radius: 16px;
-        box-shadow: var(--shadow-subtle);
-        margin-bottom: 16px;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-medium);
+        }
 
-    .card:hover {
-        transform: scale(1.02);
-        box-shadow: var(--shadow-medium);
-    }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-        border-bottom: 1px solid var(--border-color);
-    }
+        .card-content {
+            padding: 16px;
+        }
 
-    .card-content {
-        padding: 16px;
-    }
+        /* Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--surface-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            border-top: 1px solid var(--border-color);
+            z-index: 1000;
+        }
 
-    /* Navigation */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: var(--surface-color);
-        display: flex;
-        justify-content: space-around;
-        padding: 12px 0;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-        border-top: 1px solid var(--border-color);
-        z-index: 1000;
-    }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
 
-    .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: var(--text-secondary);
-        transition: color 0.3s ease;
-    }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
 
-    .nav-item i {
-        font-size: 24px;
-        margin-bottom: 4px;
-    }
+        .nav-item.active {
+            color: var(--primary-color);
+        }
 
-    .nav-item.active {
-        color: var(--primary-color);
-    }
+        /* Settings Styles */
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-    /* Settings Styles */
-    .settings-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 0;
-        border-bottom: 1px solid var(--border-color);
-    }
+        .settings-item:last-child {
+            border-bottom: none;
+        }
 
-    .settings-item:last-child {
-        border-bottom: none;
-    }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
 
-    .toggle-switch {
-        position: relative;
-        display: inline-block;
-        width: 50px;
-        height: 28px;
-    }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-    .toggle-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #CCCCCC;
+            transition: .4s;
+            border-radius: 34px;
+        }
 
-    .toggle-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #CCCCCC;
-        transition: .4s;
-        border-radius: 34px;
-    }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
 
-    .toggle-slider:before {
-        position: absolute;
-        content: "";
-        height: 24px;
-        width: 24px;
-        left: 2px;
-        bottom: 2px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
 
-    input:checked + .toggle-slider {
-        background-color: var(--primary-color);
-    }
+        input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+        }
 
-    input:checked + .toggle-slider:before {
-        transform: translateX(22px);
-    }
+        /* Utility Classes */
+        .page {
+            display: none;
+        }
 
-    /* Utility Classes */
-    .page {
-        display: none;
-    }
+        .page.active {
+            display: block;
+        }
 
-    .page.active {
-        display: block;
-    }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    /* Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .animate-fade {
-        animation: fadeIn 0.5s ease;
-    }
-</style>
+        .animate-fade {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Dashboard</h2>
+                <i class="ri-dashboard-line"></i>
+            </div>
+            <div class="card-content">
+                <p>Welcome to your personal dashboard.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
