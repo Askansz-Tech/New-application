@@ -96,7 +96,7 @@ class AppStateManager {
             translation: false,
             privacyDemo: false,
             localStorage: true,
-            cookies: true,
+            cookies: false,
             analytics: false,      // NEW
             errorReport: false     // NEW
         };
@@ -123,6 +123,9 @@ class AppStateManager {
         if (this.state.localStorage) {
             try {
                 localStorage.setItem('appState', JSON.stringify(this.state));
+                // Also save to pixelheaven_settings for JSON view
+                localStorage.setItem('pixelheaven_settings', JSON.stringify(this.state));
+                updateSettingsJsonView(); // Update the JSON view after saving
             } catch (error) {
                 console.error('Error saving app state:', error);
             }
@@ -364,3 +367,49 @@ async function updateCacheUsageDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', updateCacheUsageDisplay);
+
+function saveSettings() {
+    localStorage.setItem('pixelheaven_settings', JSON.stringify(appSettings));
+}
+
+function loadSettings() {
+    const saved = localStorage.getItem('pixelheaven_settings');
+    if (saved) {
+        Object.assign(appSettings, JSON.parse(saved));
+    }
+}
+
+function updateSettingsJsonView() {
+    const el = document.getElementById('settings-json-view');
+    const json = localStorage.getItem('pixelheaven_settings');
+    if (el) {
+        el.textContent = json ? json : 'No settings saved yet.';
+    }
+}
+document.addEventListener('DOMContentLoaded', updateSettingsJsonView);
+window.addEventListener('storage', updateSettingsJsonView);
+
+function updateLocalStorageInfo() {
+    // Calculate total bytes used
+    let totalBytes = 0;
+    let keyCount = 0;
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            totalBytes += ((localStorage[key].length + key.length) * 2); // 2 bytes per char
+            keyCount++;
+        }
+    }
+    // Format bytes
+    let usageText = totalBytes < 1024 ? totalBytes + ' B'
+        : totalBytes < 1024 * 1024 ? (totalBytes / 1024).toFixed(2) + ' KB'
+        : (totalBytes / (1024 * 1024)).toFixed(2) + ' MB';
+
+    // Update UI
+    const usageEl = document.getElementById('local-storage-usage');
+    const keysEl = document.getElementById('local-storage-keys');
+    if (usageEl) usageEl.textContent = usageText;
+    if (keysEl) keysEl.textContent = keyCount;
+}
+
+document.addEventListener('DOMContentLoaded', updateLocalStorageInfo);
+window.addEventListener('storage', updateLocalStorageInfo);
