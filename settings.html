@@ -15,19 +15,20 @@
 <body>
     <div class="app-container">
         <div id="settings" class="page active animate-fade">
-            <div class="card">
-                <div class="card-header">
-                    <h2 id="settings-title">App Settings</h2>
-                    <i class="ri-settings-3-line"></i>
+            <div class="card" style="max-width:480px;margin:32px auto;">
+                <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
+                    <h2 id="settings-title" style="margin:0;">App Settings</h2>
+                    <i class="ri-settings-3-line" style="font-size:1.6em;color:var(--primary-color);"></i>
                 </div>
-                <div class="card-content">
-                    <!-- Version info -->
+                <div class="card-content" style="padding-top:10px;">
                     <div style="text-align:right; color:var(--accent-color); font-size:0.98em; font-weight:500; margin-bottom:6px;">
                         <i class="ri-information-line"></i> Current version 0.0.3 Beta
                     </div>
                     <div style="text-align:right; color:var(--text-secondary); font-size:13px; margin-bottom:18px;">
                         &copy; 2025-2027 Pixel Heaven
                     </div>
+
+                    <!-- Appearance -->
                     <div class="settings-category" id="appearance-category">Appearance</div>
                     <div class="settings-item">
                         <div>
@@ -39,6 +40,8 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
+
+                    <!-- Notifications -->
                     <div class="settings-category" id="notifications-category">Notifications</div>
                     <div class="settings-item">
                         <div>
@@ -61,6 +64,8 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
+
+                    <!-- Privacy -->
                     <div class="settings-category" id="privacy-category">Privacy</div>
                     <div class="settings-item">
                         <div>
@@ -136,6 +141,8 @@
                             <button onclick="document.getElementById('privacy-details-modal').style.display='none';" style="margin-top:18px; padding:8px 16px; border:none; background:var(--primary-color); color:#fff; border-radius:6px; cursor:pointer;">Close</button>
                         </div>
                     </div>
+
+                    <!-- Language -->
                     <div class="settings-category" id="language-category">Language</div>
                     <div class="settings-item">
                         <div>
@@ -148,6 +155,8 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
+
+                    <!-- Restart App -->
                     <div class="settings-category">App</div>
                     <div style="color:var(--text-secondary); font-size:0.97em; margin-bottom:8px; text-align:right;">
                         The Restart Application button resets all settings and clears local storage.
@@ -162,7 +171,7 @@
         </div>
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
-            <a href="index.html" class="nav-item active">
+            <a href="index.html" class="nav-item">
                 <i class="ri-home-line"></i>
                 <span id="nav-home">Home</span>
             </a>
