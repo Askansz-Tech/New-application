@@ -13,7 +13,11 @@
     <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
-    <!-- Add this just after <body> -->
+    <noscript>
+        <div style="background:#fff;color:#d00;padding:24px;text-align:center;">
+            This app requires JavaScript to run. Please enable JavaScript in your browser.
+        </div>
+    </noscript>
     <div id="app-loader" class="loader-overlay">
         <div class="loader-spinner">
             <i class="ri-palette-line"></i>
@@ -22,7 +26,6 @@
     </div>
     <div class="app-container">
         <div id="home" class="page active animate-fade">
-            <!-- Add this welcome section -->
             <div style="text-align:center; margin:32px 0 18px 0;">
                 <h1 style="font-size:2.2em; color:var(--primary-color); font-weight:800; letter-spacing:1px;">
                     Welcome to PixelHeaven
@@ -66,20 +69,20 @@
             </div>
         </div>
         <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a href="index.html" class="nav-item active">
+        <nav class="bottom-nav" aria-label="Main navigation">
+            <a href="index.html" class="nav-item active" aria-label="Home">
                 <i class="ri-home-line"></i>
                 <span id="nav-home">Home</span>
             </a>
-            <a href="sites.html" class="nav-item">
+            <a href="sites.html" class="nav-item" aria-label="Our Sites">
                 <i class="ri-links-line"></i>
                 <span id="nav-sites">Our Sites</span>
             </a>
-            <a href="settings.html" class="nav-item">
+            <a href="settings.html" class="nav-item" aria-label="Settings">
                 <i class="ri-settings-3-line"></i>
                 <span id="nav-settings">Settings</span>
             </a>
-            <a href="bugs.html" class="nav-item">
+            <a href="bugs.html" class="nav-item" aria-label="Bugs">
                 <i class="ri-bug-line"></i>
                 <span id="nav-bugs">Bugs</span>
             </a>
