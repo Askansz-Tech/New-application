@@ -3,99 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Project Issues | PixelHeaven</title>
+    <title>Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Place inside <head> -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007AFF">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
     <div class="app-container">
-        <div id="bugs" class="page active animate-fade">
-            <div style="text-align:center; margin:28px 0 18px 0;">
-                <h1 style="font-size:2em; color:var(--primary-color); font-weight:800; letter-spacing:1px;">
-                    <i class="ri-bug-line"></i> Project Issues & Bugs
-                </h1>
-                <div style="color:var(--text-secondary); font-size:1em;">
-                    Need help? Contact <a href="mailto:info.pixelheavengames@gmail.com" style="color:var(--accent-color);">info.pixelheavengames@gmail.com</a>
+        <div id="settings" class="page active animate-fade">
+            <div class="card" style="max-width:480px;margin:32px auto;">
+                <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
+                    <h2 id="settings-title" style="margin:0;">App Settings</h2>
+                    <i class="ri-settings-3-line" style="font-size:1.6em;color:var(--primary-color);"></i>
                 </div>
-            </div>
-            <!-- Notice: App Under Construction -->
-            <div class="notice-message" style="background:var(--accent-color);color:#fff;padding:12px 18px;border-radius:8px;margin-bottom:18px;text-align:center;font-weight:500;">
-                <i class="ri-tools-line"></i> This app is currently under construction. Things may stop working. Check here to stay updated.
-            </div>
-            <!-- Project: PixelHeaven -->
-            <div class="project-card" id="project-pixelheaven">
-                <div class="project-header">
-                    <i class="ri-palette-line"></i> PixelHeaven App
-                    <i class="ri-arrow-down-s-line"></i>
-                </div>
-                <div class="project-details">
-                    <div class="project-desc">
-                        PixelHeaven App is our main creative platform for digital art and collaboration.
+                <div class="card-content" style="padding-top:10px;">
+                    <div style="text-align:right; color:var(--accent-color); font-size:0.98em; font-weight:500; margin-bottom:6px;">
+                        <i class="ri-information-line"></i> Current version 0.0.7 Beta
                     </div>
-                    <ul class="bug-list">
-                        <li>
-                            <div class="bug-title"><i class="ri-paw-line"></i> Paw App Functionality May Not Work for Everyone</div>
+                    <div style="text-align:right; color:var(--text-secondary); font-size:13px; margin-bottom:18px;">
+                        &copy; 2025-2027 Pixel Heaven
+                    </div>
+
+                    <!-- Appearance -->
+                    <div class="settings-category" id="appearance-category">Appearance</div>
+                    <section aria-labelledby="appearance-category">
+                        <div class="settings-item">
                             <div>
-                                Some users may experience issues with the Paw App features. Please try adding the website to your device's home screen for best results.
+                                <span id="dark-mode-label">Dark Mode</span>
+                                <div class="settings-desc" id="dark-mode-desc">Switches the app between light and dark themes.</div>
                             </div>
-                            <div class="bug-status">
-                                <i class="ri-time-line"></i> Issue created: 2025-08-02 19:05
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Project: Carculator Website/App -->
-            <div class="project-card" id="project-carculator">
-                <div class="project-header">
-                    <i class="ri-calculator-line"></i> Carculator Website/App
-                    <i class="ri-arrow-down-s-line"></i>
-                </div>
-                <div class="project-details">
-                    <div class="project-desc">
-                        Carculator is our new calculator app and website, designed for quick and easy calculations.
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Notifications -->
+                    <div class="settings-category" id="notifications-category">Notifications</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="notifications-label">Notifications</span>
+                            <span class="beta-tag">Beta</span>
+                            <div class="settings-desc" id="notifications-desc">Enable or disable browser notifications.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notificationsToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
-                    <div class="notice-message" style="background:var(--accent-color);color:#fff;padding:10px 16px;border-radius:8px;margin-bottom:10px;text-align:center;font-weight:500;">
-                        <i class="ri-tools-line"></i> The Carculator app/website is currently under construction. Check <a href="sites.html" style="color:#fff;text-decoration:underline;">Our Sites</a> to try the calculator.
+                    <div class="settings-item">
+                        <div>
+                            <span id="sound-label">Sound Effects</span>
+                            <div class="settings-desc" id="sound-desc">Toggle sound effects for actions.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
-                    <ul class="bug-list">
-                        <!-- Add issues and bugs here -->
-                    </ul>
-                </div>
-            </div>
-            <!-- Project: Code Library -->
-            <div class="project-card" id="project-codelibrary">
-                <div class="project-header">
-                    <i class="ri-code-line"></i> Code Library
-                    <i class="ri-arrow-down-s-line"></i>
-                </div>
-                <div class="project-details">
-                    <div class="project-desc">
-                        Code Library is our collection of useful code snippets and resources, available from Our Sites.
-                    </div>
-                    <div class="notice-message" style="background:var(--accent-color);color:#fff;padding:10px 16px;border-radius:8px;margin-bottom:10px;text-align:center;font-weight:500;">
-                        <i class="ri-tools-line"></i> The Code Library site is currently under construction. Features may not work as expected, but improvements are coming soon.
-                    </div>
-                    <ul class="bug-list">
-                        <li>
-                            <div class="bug-title"><i class="ri-alert-line"></i> Some Features May Not Work</div>
+
+                    <!-- Privacy -->
+                    <div class="settings-category" id="privacy-category">Privacy</div>
+                    <section aria-labelledby="privacy-category">
+                        <div class="settings-item">
                             <div>
-                                Certain code snippets and tools may not function correctly while the site is being updated. Please check back soon for improvements.
+                                <span id="local-storage-label">Local Storage</span>
+                                <div class="settings-desc" id="local-storage-desc">Allow the app to save your settings and data locally on your device.</div>
                             </div>
-                            <div class="bug-status">
-                                <i class="ri-time-line"></i> Issue created: 2025-08-03 18:30
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="localStorageToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="cookies-label">Cookies</span>
+                                <div class="settings-desc" id="cookies-desc">Allow the app to use cookies for session management.</div>
                             </div>
-                        </li>
-                    </ul>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="cookiesToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="analytics-label">Analytics</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="analytics-desc">
+                                    Usage events (like page views and button clicks) are stored locally and only visible to you. No analytics data is sent or shared externally.
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="analyticsToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="error-report-label">Error Reporting</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="error-report-desc">
+                                    App errors are logged locally so you can review them in the settings. No error data is sent or shared externally.
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="errorReportToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="privacy-demo-label">Privacy Demo</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="privacyDemoToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div style="margin:16px 0; color:var(--text-secondary); font-size:0.97em;">
+                            <strong>Privacy Information:</strong>
+                            <br>
+                            You control what data is stored and shared. Toggle options above to enable or disable features. No personal data is ever sold or shared.
+                            <br>
+                            <a href="#" onclick="document.getElementById('privacy-details-modal').style.display='block';return false;" style="color:var(--primary-color);text-decoration:underline;">Learn more</a>
+                            <br>
+                            <a href="privacy-policy.html" style="color:var(--primary-color);text-decoration:underline;" target="_blank">
+                                Read our Privacy Policy
+                            </a>
+                        </div>
+                        <!-- Privacy Details Modal (hidden by default) -->
+                        <div id="privacy-details-modal" tabindex="-1" aria-modal="true" role="dialog"
+                             style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:9999;"
+                             onclick="if(event.target===this)this.style.display='none';">
+                            <div style="background:#fff; max-width:400px; margin:60px auto; padding:24px; border-radius:12px; color:#222;">
+                                <h3 style="margin-top:0;">Privacy Details</h3>
+                                <ul style="padding-left:18px;">
+                                    <li><strong>Local Storage:</strong> Your settings are saved only on your device.</li>
+                                    <li><strong>Cookies:</strong> Used for session management, not for tracking.</li>
+                                    <li><strong>Analytics:</strong> Anonymous usage data, never personal info.</li>
+                                    <li><strong>Error Reporting:</strong> Crash/bug reports help us improve the app.</li>
+                                    <li><strong>Privacy Demo:</strong> Shows privacy info on the dashboard.</li>
+                                </ul>
+                                <button onclick="document.getElementById('privacy-details-modal').style.display='none';"
+                                        style="margin-top:18px; padding:8px 16px; border:none; background:var(--primary-color); color:#fff; border-radius:6px; cursor:pointer;">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Language -->
+                    <div class="settings-category" id="language-category">Language</div>
+                    <div class="settings-item">
+                        <div>
+                            <span id="translation-label">Translate to Swedish</span>
+                            <span class="beta-tag">Beta</span>
+                            <div class="settings-desc" id="translation-desc">Switches the app language between English and Swedish.</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="translationToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Restart App -->
+                    <div class="settings-category">App</div>
+                    <div style="color:var(--text-secondary); font-size:0.97em; margin-bottom:8px; text-align:right;">
+                        The Restart Application button resets all settings and clears local storage.
+                    </div>
+                    <div class="settings-item" style="justify-content: flex-end; border-bottom: none;">
+                        <button id="restartAppBtn" class="restart-btn">
+                            <i class="ri-refresh-line"></i> Restart Application
+                        </button>
+                    </div>
+                    <div id="cache-usage" style="color:var(--text-secondary); font-size:0.97em; margin-bottom:8px;">
+                        Cache Usage: <span id="cache-storage-usage">Calculating...</span>
+                    </div>
+
+                    <!-- Local Storage Info -->
+                    <div id="local-storage-info" style="font-size:0.95em; background:#f7f7f7; color:#333; padding:10px; border-radius:8px; margin-bottom:12px;">
+                        Local Storage Usage: <span id="local-storage-usage">Calculating...</span><br>
+                        Local Storage Keys: <span id="local-storage-keys">Calculating...</span>
+                    </div>
+                    <div id="analytics-local-view" style="font-size:0.95em; background:#f7f7fa; color:#333; padding:10px; border-radius:8px; margin-bottom:12px;">
+                        <strong>Local Analytics Events:</strong>
+                        <ul id="analytics-events-list" style="margin-top:6px; padding-left:18px;"></ul>
+                    </div>
+                    <div id="error-local-view" style="font-size:0.95em; background:#fff5f5; color:#d00; padding:10px; border-radius:8px; margin-bottom:12px;">
+                        <strong>Local Error Reports:</strong>
+                        <ul id="error-events-list" style="margin-top:6px; padding-left:18px;"></ul>
+                    </div>
                 </div>
             </div>
-            <!-- Add more projects here by duplicating .project-card -->
         </div>
         <!-- Bottom Navigation -->
         <nav class="bottom-nav" aria-label="Main navigation">
@@ -107,11 +213,11 @@
                 <i class="ri-links-line"></i>
                 <span id="nav-sites">Our Sites</span>
             </a>
-            <a href="settings.html" class="nav-item" aria-label="Settings">
+            <a href="settings.html" class="nav-item active" aria-label="Settings">
                 <i class="ri-settings-3-line"></i>
                 <span id="nav-settings">Settings</span>
             </a>
-            <a href="bugs.html" class="nav-item active" aria-label="Bugs">
+            <a href="bugs.html" class="nav-item" aria-label="Bugs">
                 <i class="ri-bug-line"></i>
                 <span id="nav-bugs">Bugs</span>
             </a>
@@ -121,13 +227,6 @@
                 <span style="position: absolute; top: -8px; right: -11px; background: var(--accent-color); color: #fff; font-size: 0.7em; font-weight: bold; padding: 2px 6px; border-radius: 8px;">Beta</span>
             </a>
         </nav>
-        <footer style="width:100%;background:var(--surface-color);border-top:1px solid var(--border-color);box-shadow:0 -2px 10px rgba(0,0,0,0.04);padding:18px 0;position:fixed;bottom:0;left:0;right:0;z-index:100;">
-            <div style="max-width:480px;margin:0 auto;text-align:center;">
-            <div style="font-weight:700;color:var(--primary-color);font-size:1.1em;margin-bottom:6px;">
-                <i class="ri-bug-line"></i> PixelHeaven Bugs & Issues
-            </div>
-            </div>
-        </footer>
     </div>
     <script src="app.js"></script>
 </body>
