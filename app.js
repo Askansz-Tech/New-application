@@ -38,9 +38,9 @@ const translations = {
         bugsTitle: "Known Bugs & Issues",
         restartAppBtn: "Restart Application", // Add this to the English section
         analyticsLabel: "Analytics",
-        analyticsDesc: "Allow anonymous usage data to help improve the app.",
+        analyticsDesc: "Usage events (like page views and button clicks) are stored locally and only visible to you. No analytics data is sent or shared externally.",
         errorReportLabel: "Error Reporting",
-        errorReportDesc: "Send crash and bug reports to help us fix issues faster."
+        errorReportDesc: "App errors are logged locally so you can review them in the settings. No error data is sent or shared externally."
     },
     sv: {
         dashboardTitle: "Instrumentpanel",
@@ -81,9 +81,9 @@ const translations = {
         bugsTitle: "Kända buggar & problem",
         restartAppBtn: "Starta om applikationen", // Add this to the Swedish section
         analyticsLabel: "Analys",
-        analyticsDesc: "Tillåt anonym användningsdata för att förbättra appen.",
+        analyticsDesc: "Användningshändelser (som sidvisningar och knapptryckningar) lagras lokalt och är endast synliga för dig. Ingen analysdata skickas eller delas externt.",
         errorReportLabel: "Felsökning",
-        errorReportDesc: "Skicka krascher och buggrapporter för att hjälpa oss åtgärda problem snabbare."
+        errorReportDesc: "Appfel loggas lokalt så att du kan granska dem i inställningarna. Ingen feldata skickas eller delas externt."
     }
 };
 
