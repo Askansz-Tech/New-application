@@ -31,16 +31,16 @@
                     <!-- Appearance -->
                     <div class="settings-category" id="appearance-category">Appearance</div>
                     <section aria-labelledby="appearance-category">
-                    <div class="settings-item">
-                        <div>
-                            <span id="dark-mode-label">Dark Mode</span>
-                            <div class="settings-desc" id="dark-mode-desc">Switches the app between light and dark themes.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="dark-mode-label">Dark Mode</span>
+                                <div class="settings-desc" id="dark-mode-desc">Switches the app between light and dark themes.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="darkModeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
                     </section>
 
                     <!-- Notifications -->
@@ -70,85 +70,89 @@
                     <!-- Privacy -->
                     <div class="settings-category" id="privacy-category">Privacy</div>
                     <section aria-labelledby="privacy-category">
-                    <div class="settings-item">
-                        <div>
-                            <span id="local-storage-label">Local Storage</span>
-                            <div class="settings-desc" id="local-storage-desc">Allow the app to save your settings and data locally on your device.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="local-storage-label">Local Storage</span>
+                                <div class="settings-desc" id="local-storage-desc">Allow the app to save your settings and data locally on your device.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="localStorageToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="localStorageToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <div>
-                            <span id="cookies-label">Cookies</span>
-                            <div class="settings-desc" id="cookies-desc">Allow the app to use cookies for session management.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="cookies-label">Cookies</span>
+                                <div class="settings-desc" id="cookies-desc">Allow the app to use cookies for session management.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="cookiesToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="cookiesToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <div>
-                            <span id="analytics-label">Analytics</span>
-                            <span class="beta-tag">Beta</span>
-                            <div class="settings-desc" id="analytics-desc">Allow anonymous usage data to help improve the app.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="analytics-label">Analytics</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="analytics-desc">Allow anonymous usage data to help improve the app.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="analyticsToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="analyticsToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <div>
-                            <span id="error-report-label">Error Reporting</span>
-                            <span class="beta-tag">Beta</span>
-                            <div class="settings-desc" id="error-report-desc">Send crash and bug reports to help us fix issues faster.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="error-report-label">Error Reporting</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="error-report-desc">Send crash and bug reports to help us fix issues faster.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="errorReportToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="errorReportToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="settings-item">
-                        <div>
-                            <span id="privacy-demo-label">Privacy Demo</span>
-                            <span class="beta-tag">Beta</span>
-                            <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
+                        <div class="settings-item">
+                            <div>
+                                <span id="privacy-demo-label">Privacy Demo</span>
+                                <span class="beta-tag">Beta</span>
+                                <div class="settings-desc" id="privacy-demo-desc">Show a privacy demonstration card on the dashboard.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="privacyDemoToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="privacyDemoToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div style="margin:16px 0; color:var(--text-secondary); font-size:0.97em;">
-                        <strong>Privacy Information:</strong>
-                        <br>
-                        You control what data is stored and shared. Toggle options above to enable or disable features. No personal data is ever sold or shared.
-                        <br>
-                        <a href="#" onclick="document.getElementById('privacy-details-modal').style.display='block';return false;" style="color:var(--primary-color);text-decoration:underline;">Learn more</a>
-                    </div>
-                    <!-- Privacy Details Modal (hidden by default) -->
-                    <div id="privacy-details-modal" tabindex="-1" aria-modal="true" role="dialog"
-                         style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:9999;"
-                         onclick="if(event.target===this)this.style.display='none';">
-                        <div style="background:#fff; max-width:400px; margin:60px auto; padding:24px; border-radius:12px; color:#222;">
-                            <h3 style="margin-top:0;">Privacy Details</h3>
-                            <ul style="padding-left:18px;">
-                                <li><strong>Local Storage:</strong> Your settings are saved only on your device.</li>
-                                <li><strong>Cookies:</strong> Used for session management, not for tracking.</li>
-                                <li><strong>Analytics:</strong> Anonymous usage data, never personal info.</li>
-                                <li><strong>Error Reporting:</strong> Crash/bug reports help us improve the app.</li>
-                                <li><strong>Privacy Demo:</strong> Shows privacy info on the dashboard.</li>
-                            </ul>
-                            <button onclick="document.getElementById('privacy-details-modal').style.display='none';"
-                                    style="margin-top:18px; padding:8px 16px; border:none; background:var(--primary-color); color:#fff; border-radius:6px; cursor:pointer;">
-                                Close
-                            </button>
+                        <div style="margin:16px 0; color:var(--text-secondary); font-size:0.97em;">
+                            <strong>Privacy Information:</strong>
+                            <br>
+                            You control what data is stored and shared. Toggle options above to enable or disable features. No personal data is ever sold or shared.
+                            <br>
+                            <a href="#" onclick="document.getElementById('privacy-details-modal').style.display='block';return false;" style="color:var(--primary-color);text-decoration:underline;">Learn more</a>
+                            <br>
+                            <a href="privacy-policy.html" style="color:var(--primary-color);text-decoration:underline;" target="_blank">
+                                Read our Privacy Policy
+                            </a>
                         </div>
-                    </div>
+                        <!-- Privacy Details Modal (hidden by default) -->
+                        <div id="privacy-details-modal" tabindex="-1" aria-modal="true" role="dialog"
+                             style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:9999;"
+                             onclick="if(event.target===this)this.style.display='none';">
+                            <div style="background:#fff; max-width:400px; margin:60px auto; padding:24px; border-radius:12px; color:#222;">
+                                <h3 style="margin-top:0;">Privacy Details</h3>
+                                <ul style="padding-left:18px;">
+                                    <li><strong>Local Storage:</strong> Your settings are saved only on your device.</li>
+                                    <li><strong>Cookies:</strong> Used for session management, not for tracking.</li>
+                                    <li><strong>Analytics:</strong> Anonymous usage data, never personal info.</li>
+                                    <li><strong>Error Reporting:</strong> Crash/bug reports help us improve the app.</li>
+                                    <li><strong>Privacy Demo:</strong> Shows privacy info on the dashboard.</li>
+                                </ul>
+                                <button onclick="document.getElementById('privacy-details-modal').style.display='none';"
+                                        style="margin-top:18px; padding:8px 16px; border:none; background:var(--primary-color); color:#fff; border-radius:6px; cursor:pointer;">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
                     </section>
 
                     <!-- Language -->
@@ -176,8 +180,8 @@
                         </button>
                     </div>
                     <div id="cache-usage" style="color:var(--text-secondary); font-size:0.97em; margin-bottom:8px;">
-    Cache Usage: <span id="cache-storage-usage">Calculating...</span>
-</div>
+                        Cache Usage: <span id="cache-storage-usage">Calculating...</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,4 +208,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
