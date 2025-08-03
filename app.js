@@ -316,3 +316,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function getLocalStorageUsage() {
+    let total = 0;
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            total += ((localStorage[key].length + key.length) * 2); // 2 bytes per char
+        }
+    }
+    return total; // bytes
+}
+
+function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+function updateStorageUsageDisplay() {
+    const usage = getLocalStorageUsage();
+    const el = document.getElementById('local-storage-usage');
+    if (el) el.textContent = formatBytes(usage);
+}
+
+// Update on load and after any storage change
+document.addEventListener('DOMContentLoaded', updateStorageUsageDisplay);
+window.addEventListener('storage', updateStorageUsageDisplay);
+
+// Add a file to cache
+async function cacheFile(url) {
+    const cache = await caches.open('pixelheaven-cache');
+    await cache.add(url);
+}
+
+// Get cache usage (approximate, not all browsers support size info)
+async function getCacheUsage() {
+    const cache = await caches.open('pixelheaven-cache');
+    const requests = await cache.keys();
+    return requests.length; // Number of cached requests
+}
+
+async function updateCacheUsageDisplay() {
+    const cache = await caches.open('pixelheaven-cache');
+    const requests = await cache.keys();
+    const el = document.getElementById('cache-storage-usage');
+    if (el) el.textContent = requests.length + ' files';
+}
+
+document.addEventListener('DOMContentLoaded', updateCacheUsageDisplay);
