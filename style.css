@@ -313,6 +313,10 @@ footer .ri-discord-line {
     align-items: center;
     justify-content: center;
     transition: opacity 0.5s;
+    pointer-events: all;
+}
+.loader-overlay[style*="display: none"] {
+    pointer-events: none;
 }
 .loader-spinner {
     display: flex;
