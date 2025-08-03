@@ -3,13 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Privacy Policy - PixelHeaven</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: var(--background-color, #F4F6F9);
+            color: var(--text-primary, #1A1A1A);
+            font-family: var(--font-family, 'Inter', sans-serif);
+            margin: 0;
+            padding: 0;
+        }
+        .privacy-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px 16px 32px 16px;
+            background: var(--surface-color, #fff);
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle, 0 4px 6px rgba(0,0,0,0.05));
+        }
+        h1 {
+            font-size: 2em;
+            color: var(--primary-color, #007AFF);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        ul {
+            margin: 18px 0 18px 0;
+            padding-left: 22px;
+        }
+        li {
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+        p, a {
+            font-size: 1.08em;
+            line-height: 1.7;
+        }
+        a {
+            color: var(--primary-color, #007AFF);
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .back-link {
+            display: block;
+            margin: 28px auto 0 auto;
+            text-align: center;
+            font-size: 1.1em;
+            padding: 12px 0;
+        }
+        @media (max-width: 700px) {
+            .privacy-container {
+                max-width: 98vw;
+                padding: 16px 4vw 24px 4vw;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            h1 {
+                font-size: 1.4em;
+            }
+        }
+        @media (max-width: 480px) {
+            .privacy-container {
+                padding: 10px 2vw 18px 2vw;
+            }
+            h1 {
+                font-size: 1.1em;
+            }
+            li, p, a {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container" style="max-width:600px;margin:32px auto;">
-        <h1 style="color:var(--primary-color);margin-bottom:16px;">Privacy Policy</h1>
+    <div class="privacy-container">
+        <h1><i class="ri-shield-user-line" style="vertical-align:middle;margin-right:8px;"></i>Privacy Policy</h1>
         <p>
             <strong>Last updated:</strong> August 3, 2025
         </p>
@@ -27,9 +96,9 @@
             <strong>Your Choices:</strong> You control all privacy-related features in the settings. You can enable or disable analytics, error reporting, cookies, and local storage at any time.
         </p>
         <p>
-            <strong>Contact:</strong> For questions or concerns, please contact us via our GitHub page.
+            <strong>Contact:</strong> For questions or concerns, please contact us via our <a href="https://github.com/Askansz-Tech" target="_blank">GitHub page</a>.
         </p>
-        <a href="settings.html" style="color:var(--primary-color);text-decoration:underline;">Back to Settings</a>
+        <a href="settings.html" class="back-link"><i class="ri-arrow-left-line"></i> Back to Settings</a>
     </div>
 </body>
 </html>
