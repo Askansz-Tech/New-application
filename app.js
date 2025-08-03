@@ -320,6 +320,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Log a page view when home loads
+document.addEventListener('DOMContentLoaded', function() {
+    logAnalytics('page_view', { page: 'home' });
+});
+
+// Log a button click
+const btn = document.getElementById('restartAppBtn');
+if (btn) {
+    btn.addEventListener('click', function() {
+        logAnalytics('restart_app_clicked');
+    });
+}
+
 function getLocalStorageUsage() {
     let total = 0;
     for (let key in localStorage) {
@@ -368,6 +381,12 @@ async function updateCacheUsageDisplay() {
 
 document.addEventListener('DOMContentLoaded', updateCacheUsageDisplay);
 
+const appSettings = {
+    // ...other settings...
+    analyticsData: [],
+    errorReports: []
+};
+
 function saveSettings() {
     localStorage.setItem('pixelheaven_settings', JSON.stringify(appSettings));
 }
@@ -413,3 +432,55 @@ function updateLocalStorageInfo() {
 
 document.addEventListener('DOMContentLoaded', updateLocalStorageInfo);
 window.addEventListener('storage', updateLocalStorageInfo);
+
+function logAnalytics(event, details) {
+    appSettings.analyticsData.push({
+        event,
+        details,
+        timestamp: new Date().toISOString()
+    });
+    saveSettings();
+}
+
+window.onerror = function(message, source, lineno, colno, error) {
+    appSettings.errorReports.push({
+        message,
+        source,
+        lineno,
+        colno,
+        error: error ? error.stack : null,
+        timestamp: new Date().toISOString()
+    });
+    saveSettings();
+};
+
+function updateLocalAnalyticsView() {
+    const analyticsList = document.getElementById('analytics-events-list');
+    if (analyticsList && appSettings.analyticsData.length) {
+        analyticsList.innerHTML = appSettings.analyticsData.slice(-5).map(a =>
+            `<li>${a.event} (${a.timestamp})</li>`
+        ).join('');
+    } else if (analyticsList) {
+        analyticsList.innerHTML = '<li>No analytics events logged.</li>';
+    }
+}
+
+function updateLocalErrorView() {
+    const errorList = document.getElementById('error-events-list');
+    if (errorList && appSettings.errorReports.length) {
+        errorList.innerHTML = appSettings.errorReports.slice(-5).map(e =>
+            `<li>${e.message} (${e.timestamp})</li>`
+        ).join('');
+    } else if (errorList) {
+        errorList.innerHTML = '<li>No errors reported.</li>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateLocalAnalyticsView();
+    updateLocalErrorView();
+});
+window.addEventListener('storage', () => {
+    updateLocalAnalyticsView();
+    updateLocalErrorView();
+});
