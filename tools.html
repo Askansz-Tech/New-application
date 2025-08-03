@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="app-container">
+        <div id="tools" class="page active animate-fade">
+            <div style="text-align:center; margin:28px 0 18px 0;">
+                <h1 style="font-size:2em; color:var(--primary-color); font-weight:800; letter-spacing:1px;">
+                    <i class="ri-tools-line"></i> Tools
+                </h1>
+                <p style="color:var(--text-secondary); font-size:1em;">
+                    Explore and use the tools available in PixelHeaven.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Available Tools</h2>
+                    <i class="ri-tool-line"></i>
+                </div>
+                <div class="card-content">
+                    <div class="tools-list" style="display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Tool 1 -->
+                        <a href="tools/qr-code-generator.html" class="tool-card" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-subtle); text-decoration: none; color: var(--text-primary);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="ri-qr-code-line" style="font-size: 2em; color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="font-size: 1.1em; color: var(--primary-color);">QR Code Generator</strong>
+                                    <p style="margin: 4px 0 0; font-size: 0.9em; color: var(--text-secondary);">Generate custom QR codes easily.</p>
+                                </div>
+                            </div>
+                            <i class="ri-arrow-right-s-line" style="font-size: 1.5em; color: var(--accent-color);"></i>
+                        </a>
+                        <!-- Tool 2 -->
+                        <a href="tools/CalculatorV1/index.html" class="tool-card" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-subtle); text-decoration: none; color: var(--text-primary);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="ri-calculator-line" style="font-size: 2em; color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="font-size: 1.1em; color: var(--primary-color);">Calculator</strong>
+                                    <p style="margin: 4px 0 0; font-size: 0.9em; color: var(--text-secondary);">A simple and easy-to-use calculator.</p>
+                                </div>
+                            </div>
+                            <i class="ri-arrow-right-s-line" style="font-size: 1.5em; color: var(--accent-color);"></i>
+                        </a>
+                        <!-- Tool 3 -->
+                        <a href="tools/3d-model-viewer.html" class="tool-card" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-subtle); text-decoration: none; color: var(--text-primary);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <i class="ri-cube-line" style="font-size: 2em; color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="font-size: 1.1em; color: var(--primary-color);">3D Model Viewer</strong>
+                                    <p style="margin: 4px 0 0; font-size: 0.9em; color: var(--text-secondary);">View and interact with 3D models online.</p>
+                                </div>
+                            </div>
+                            <i class="ri-arrow-right-s-line" style="font-size: 1.5em; color: var(--accent-color);"></i>
+                        </a>
+                        <!-- Add more tools here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" aria-label="Main navigation">
+            <a href="index.html" class="nav-item" aria-label="Home">
+                <i class="ri-home-line"></i>
+                <span id="nav-home">Home</span>
+            </a>
+            <a href="sites.html" class="nav-item" aria-label="Our Sites">
+                <i class="ri-links-line"></i>
+                <span id="nav-sites">Our Sites</span>
+            </a>
+            <a href="settings.html" class="nav-item" aria-label="Settings">
+                <i class="ri-settings-3-line"></i>
+                <span id="nav-settings">Settings</span>
+            </a>
+            <a href="bugs.html" class="nav-item" aria-label="Bugs">
+                <i class="ri-bug-line"></i>
+                <span id="nav-bugs">Bugs</span>
+            </a>
+            <a href="tools.html" class="nav-item active" aria-label="Tools" style="position: relative;">
+                <i class="ri-tools-line"></i>
+                <span id="nav-tools">Tools</span>
+                <span style="position: absolute; top: -8px; right: -11px; background: var(--accent-color); color: #fff; font-size: 0.7em; font-weight: bold; padding: 2px 6px; border-radius: 8px;">Beta</span>
+            </a>
+        </nav>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
