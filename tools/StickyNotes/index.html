@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sticky Notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        .sticky-notes-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .sticky-notes-container h1 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sticky-notes-container .actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .sticky-notes-container button {
+            flex: 1;
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sticky-notes-container button:hover {
+            background: var(--accent-color);
+            transform: scale(1.02);
+        }
+        .notes-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .note {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-subtle);
+            padding: 12px;
+            width: calc(50% - 10px);
+            min-height: 120px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+            cursor: grab;
+        }
+        .note:active {
+            cursor: grabbing;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .note textarea {
+            width: 100%;
+            height: 80px;
+            border: none;
+            outline: none;
+            background: transparent;
+            resize: none;
+            font-size: 1em;
+            color: var(--text-primary);
+        }
+        .note textarea::placeholder {
+            color: var(--text-secondary);
+        }
+        .note .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .note .delete-btn:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+        .note .color-picker {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .note .color-picker:hover::after {
+            content: "Change Color";
+            position: absolute;
+            top: -24px;
+            left: 0;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+        .no-notes {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .saving-indicator {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: none;
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        .back-button i {
+            font-size: 1.2em;
+        }
+        @media (max-width: 768px) {
+            .note {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-notes-container">
+        <!-- Back Button -->
+        <a href="../../tools.html" class="back-button">
+            <i class="ri-arrow-left-line"></i> Back to Tools
+        </a>
+
+        <!-- Sticky Notes Header -->
+        <h1><i class="ri-sticky-note-line"></i> Sticky Notes</h1>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button onclick="addNote()">Add New Note</button>
+            <button onclick="saveNotes()">Save All Notes</button>
+        </div>
+
+        <!-- Notes List -->
+        <div class="notes-list" id="notes-list"></div>
+        <p class="no-notes" id="no-notes">No notes yet. Click "Add New Note" to get started!</p>
+        <p class="saving-indicator" id="saving-indicator">Saving...</p>
+    </div>
+
+    <script>
+        const notesList = document.getElementById('notes-list');
+        const noNotesMessage = document.getElementById('no-notes');
+        const savingIndicator = document.getElementById('saving-indicator');
+        let saveTimeout;
+
+        // Load notes from localStorage
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem('stickyNotes')) || [];
+            notesList.innerHTML = '';
+            if (notes.length === 0) {
+                noNotesMessage.style.display = 'block';
+            } else {
+                noNotesMessage.style.display = 'none';
+                notes.forEach((note, index) => {
+                    createNoteElement(note.content, note.color, index);
+                });
+            }
+        }
+
+        // Save notes to localStorage with debounce
+        function saveNotes() {
+            savingIndicator.style.display = 'block';
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                const notes = Array.from(document.querySelectorAll('.note')).map(note => ({
+                    content: note.querySelector('textarea').value,
+                    color: note.style.backgroundColor || 'var(--surface-color)'
+                }));
+                localStorage.setItem('stickyNotes', JSON.stringify(notes));
+                savingIndicator.style.display = 'none';
+                Toastify({
+                    text: "All notes saved!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                }).showToast();
+            }, 1000); // Save after 1 second of inactivity
+        }
+
+        // Add a new note
+        function addNote() {
+            createNoteElement('', 'var(--surface-color)', notesList.children.length);
+            saveNotes();
+            Toastify({
+                text: "New note added!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            }).showToast();
+        }
+
+        // Create a note element
+        function createNoteElement(content, color, index) {
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.style.backgroundColor = color;
+            note.draggable = true;
+            note.innerHTML = `
+                <textarea placeholder="Write something..." oninput="saveNotes()">${content}</textarea>
+                <button class="delete-btn" onclick="deleteNote(${index})"><i class="ri-close-line"></i></button>
+                <input type="color" class="color-picker" value="${color}" onchange="changeNoteColor(this, ${index})">
+            `;
+            notesList.appendChild(note);
+        }
+
+        // Delete a note
+        function deleteNote(index) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to recover this note!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const notes = JSON.parse(localStorage.getItem('stickyNotes')) || [];
+                    notes.splice(index, 1);
+                    localStorage.setItem('stickyNotes', JSON.stringify(notes));
+                    loadNotes();
+                    Swal.fire(
+                        'Deleted!',
+                        'Your note has been deleted.',
+                        'success'
+                    );
+                }
+            });
+        }
+
+        // Change note color
+        function changeNoteColor(input, index) {
+            const note = input.closest('.note');
+            note.style.backgroundColor = input.value;
+            saveNotes();
+        }
+
+        // Initialize the app
+        loadNotes();
+    </script>
+</body>
+</html>
