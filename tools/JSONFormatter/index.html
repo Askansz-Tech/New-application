@@ -240,7 +240,7 @@
 
         function formatJSON() {
             errorDiv.style.display = 'none';
-            resultWrap.style.display = 'block';
+            resultWrap.style.display = 'none';
             copyBtn.style.display = 'none';
             shareBtn.style.display = 'none';
             copyFeedback.style.display = 'none';
@@ -259,14 +259,61 @@
                 }, 150);
                 showInfo(obj);
             } catch (e) {
-                let line = getErrorLine(e, editor.getValue());
+                const errorLine = getErrorLine(e, editor.getValue());
                 errorText.innerHTML = `<strong>Error:</strong> ${e.message}` +
-                    (line ? `<br><span>Tip: Check line <strong>${line}</strong> for issues.</span>` : '') +
-                    `<br><span style="font-size:0.95em;">Common issues: missing commas, quotes, brackets.</span>`;
+                    (errorLine ? `<br><span>Problem detected at line <strong>${errorLine}</strong>.<br><em>Tip: The actual mistake is often just before this line.</em></span>` : '') +
+                    `<br><span style="font-size:0.95em;">Check for missing commas, quotes, or brackets.</span>`;
                 errorDiv.style.display = 'flex';
-                if (line) highlightErrorLine(line);
+                if (errorLine) {
+                    highlightErrorLine(errorLine);
+                    scrollToErrorLine(errorLine);
+                }
             }
         }
+
+        // Scroll to error line in CodeMirror
+        function scrollToErrorLine(line) {
+            editor.scrollIntoView({line: line - 1, ch: 0}, 100);
+        }
+
+        // Highlight error line in CodeMirror
+        let errorMarker = null;
+        function highlightErrorLine(line) {
+            if (errorMarker) errorMarker.clear();
+            errorMarker = editor.markText(
+                { line: line - 1, ch: 0 },
+                { line: line - 1, ch: editor.getLine(line - 1).length },
+                { className: "error-line" }
+            );
+        }
+        function removeErrorHighlight() {
+            if (errorMarker) errorMarker.clear();
+        }
+
+        // Extract error line from JSON.parse error
+        function getErrorLine(error, text) {
+            // Try to extract position from error message
+            const match = error.message.match(/position (\d+)/);
+            if (match) {
+                const pos = parseInt(match[1]);
+                // Map character position to line and column
+                let line = 1, col = 1;
+                for (let i = 0; i < pos && i < text.length; i++) {
+                    if (text[i] === '\n') {
+                        line++;
+                        col = 1;
+                    } else {
+                        col++;
+                    }
+                }
+                return line;
+            }
+            // Try to extract line number directly
+            const match2 = error.message.match(/line (\d+)/);
+            if (match2) return parseInt(match2[1]);
+            return null;
+        }
+
         function clearJSON() {
             editor.setValue('');
             errorDiv.style.display = 'none';
@@ -344,30 +391,6 @@
             sel.addRange(range);
         });
 
-        // Error line highlight using CodeMirror's markText
-        let errorMarker = null;
-        function getErrorLine(error, text) {
-            const match = error.message.match(/position (\d+)/);
-            if (match) {
-                const pos = parseInt(match[1]);
-                const lines = text.substr(0, pos).split('\n');
-                return lines.length;
-            }
-            const match2 = error.message.match(/line (\d+)/);
-            if (match2) return parseInt(match2[1]);
-            return null;
-        }
-        function highlightErrorLine(line) {
-            if (errorMarker) errorMarker.clear();
-            errorMarker = editor.markText(
-                { line: line - 1, ch: 0 },
-                { line: line - 1, ch: editor.getLine(line - 1).length },
-                { className: "error-line" }
-            );
-        }
-        function removeErrorHighlight() {
-            if (errorMarker) errorMarker.clear();
-        }
         // Info panel
         function showInfo(obj) {
             let info = '';
