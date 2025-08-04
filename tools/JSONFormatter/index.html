@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Formatter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css">
+    <style>
+        .json-tool-container {
+            max-width: 98vw;
+            margin: 0 auto;
+            background: var(--surface-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+            padding: 18px 8px 24px 8px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 18px;
+            font-size: 1.1em;
+        }
+        .back-link:active {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+        .input-wrap {
+            position: relative;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #json-editor {
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--background-color, #F4F6F9);
+            font-size: 1.1em;
+            min-height: 120px;
+        }
+        .CodeMirror {
+            height: auto !important;
+            min-height: 120px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            background: var(--background-color, #F4F6F9);
+            z-index: 1;
+            position: relative;
+        }
+        .json-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2; /* Make sure buttons are above input/output */
+        }
+        .json-actions button {
+            flex: 1 1 40%;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 4px;
+            transition: background 0.2s;
+        }
+        .json-actions button:active {
+            background: var(--accent-color);
+        }
+        #share-btn {
+            background: var(--accent-color);
+            color: #fff;
+        }
+        .copy-feedback {
+            color: var(--primary-color);
+            font-size: 1em;
+            margin-left: 10px;
+            font-weight: 500;
+            display: none;
+        }
+        .error-msg {
+            color: #d00;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            background: #fff0f0;
+            padding: 8px 12px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .error-msg button {
+            background: none;
+            border: none;
+            color: #d00;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        .json-result-wrap {
+            display: block;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .json-lines {
+            user-select: none;
+            text-align: right;
+            padding-right: 8px;
+            color: #adb5bd;
+            font-size: 1em;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            background: transparent;
+        }
+        .json-result {
+            background: #f4f6f9;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 1.1em;
+            white-space: pre;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+            min-height: 80px;
+            max-height: 300px;
+            overflow-x: auto;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+        body.dark-mode .json-result {
+            background: #222;
+            color: #eee;
+        }
+        .json-result:active, .json-result:focus {
+            outline: 2px solid var(--primary-color);
+        }
+        /* Syntax highlighting */
+        .json-key { color: #007AFF; }
+        .json-string { color: #d6336c; }
+        .json-number { color: #2b8a3e; }
+        .json-boolean { color: #f59f00; }
+        .json-null { color: #adb5bd; }
+        .error-line {
+            background: #ffe3e3 !important;
+        }
+        .info-panel {
+            background: #f4f6f9;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .info-panel strong {
+            color: var(--primary-color);
+        }
+        @media (max-width: 600px) {
+            .json-tool-container { padding: 8px 2px 16px 2px; }
+            .json-result { font-size: 1em; }
+            .json-actions button { font-size: 1em; padding: 10px 0; }
+            .info-panel { font-size: 0.95em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="json-tool-container">
+        <a href="../../tools.html" class="back-link"><i class="ri-arrow-left-line"></i> Back to Tools</a>
+        <h2><i class="ri-code-s-slash-line"></i> JSON Formatter</h2>
+        <p style="color:var(--text-secondary);margin-bottom:16px;">
+            Paste your JSON below and tap "Format" to beautify, validate, and highlight it.
+        </p>
+        <div class="input-wrap">
+            <div id="json-editor" style="height:200px;"></div>
+        </div>
+        <div class="json-actions">
+            <button onclick="formatJSON()">Format</button>
+            <button onclick="clearJSON()" style="background:var(--accent-color);">Clear</button>
+            <button onclick="copyJSON()" id="copy-btn" style="background:var(--surface-color);color:var(--primary-color);border:1px solid var(--primary-color);display:none;">Copy</button>
+            <button onclick="shareJSON()" id="share-btn" style="display:none;">Share</button>
+            <span id="copy-feedback" class="copy-feedback">Copied!</span>
+        </div>
+        <div id="error" class="error-msg" style="display:none;">
+            <span id="error-text"></span>
+            <button onclick="hideError()" aria-label="Close error">&times;</button>
+        </div>
+        <div id="info-panel" class="info-panel" style="display:none;"></div>
+        <div class="json-result-wrap" style="display:none;">
+            <pre id="json-lines" class="json-lines"></pre>
+            <pre id="json-result" class="json-result" tabindex="0"></pre>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.min.js"></script>
+    <script>
+        const errorDiv = document.getElementById('error');
+        const errorText = document.getElementById('error-text');
+        const resultDiv = document.getElementById('json-result');
+        const linesDiv = document.getElementById('json-lines');
+        const resultWrap = document.querySelector('.json-result-wrap');
+        const copyBtn = document.getElementById('copy-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const copyFeedback = document.getElementById('copy-feedback');
+        const infoPanel = document.getElementById('info-panel');
+
+        // Initialize CodeMirror editor
+        const editor = CodeMirror(document.getElementById('json-editor'), {
+            mode: "application/json",
+            lineNumbers: true,
+            theme: "default",
+            value: '',
+            viewportMargin: Infinity
+        });
+
+        function formatJSON() {
+            errorDiv.style.display = 'none';
+            resultWrap.style.display = 'block'; // <-- Use block, not flex!
+            copyBtn.style.display = 'none';
+            shareBtn.style.display = 'none';
+            copyFeedback.style.display = 'none';
+            infoPanel.style.display = 'none';
+            removeErrorHighlight();
+            let obj;
+            try {
+                obj = JSON.parse(editor.getValue());
+                const pretty = JSON.stringify(obj, null, 4);
+                resultDiv.innerHTML = syntaxHighlight(pretty);
+                linesDiv.innerHTML = getLineNumbers(pretty);
+                resultWrap.style.display = 'block'; // <-- Use block, not flex!
+                copyBtn.style.display = 'inline-block';
+                shareBtn.style.display = (navigator.share ? 'inline-block' : 'none');
+                setTimeout(() => {
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 150);
+                showInfo(obj);
+            } catch (e) {
+                let line = getErrorLine(e, editor.getValue());
+                errorText.innerHTML = `<strong>Error:</strong> ${e.message}` +
+                    (line ? `<br><span>Tip: Check line <strong>${line}</strong> for issues.</span>` : '') +
+                    `<br><span style="font-size:0.95em;">Common issues: missing commas, quotes, brackets.</span>`;
+                errorDiv.style.display = 'flex';
+                if (line) highlightErrorLine(line);
+            }
+        }
+        function clearJSON() {
+            editor.setValue('');
+            errorDiv.style.display = 'none';
+            resultWrap.style.display = 'none';
+            copyBtn.style.display = 'none';
+            shareBtn.style.display = 'none';
+            copyFeedback.style.display = 'none';
+            infoPanel.style.display = 'none';
+            removeErrorHighlight();
+        }
+        function copyJSON() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = resultDiv.innerHTML;
+            const text = tempDiv.textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+                copyFeedback.style.display = 'inline';
+                setTimeout(() => { copyFeedback.style.display = 'none'; }, 2000);
+            }
+        }
+        function shareJSON() {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = resultDiv.innerHTML;
+            const text = tempDiv.textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Formatted JSON',
+                    text: text
+                });
+            }
+        }
+        function hideError() {
+            errorDiv.style.display = 'none';
+            removeErrorHighlight();
+        }
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+        function getLineNumbers(str) {
+            const lines = str.split('\n').length;
+            let out = '';
+            for (let i = 1; i <= lines; i++) {
+                out += i + '\n';
+            }
+            return out;
+        }
+        // Tap to select/copy result
+        resultDiv.addEventListener('click', function() {
+            const range = document.createRange();
+            range.selectNodeContents(resultDiv);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        });
+
+        // Error line highlight using CodeMirror's markText
+        let errorMarker = null;
+        function getErrorLine(error, text) {
+            const match = error.message.match(/position (\d+)/);
+            if (match) {
+                const pos = parseInt(match[1]);
+                const lines = text.substr(0, pos).split('\n');
+                return lines.length;
+            }
+            const match2 = error.message.match(/line (\d+)/);
+            if (match2) return parseInt(match2[1]);
+            return null;
+        }
+        function highlightErrorLine(line) {
+            if (errorMarker) errorMarker.clear();
+            errorMarker = editor.markText(
+                { line: line - 1, ch: 0 },
+                { line: line - 1, ch: editor.getLine(line - 1).length },
+                { className: "error-line" }
+            );
+        }
+        function removeErrorHighlight() {
+            if (errorMarker) errorMarker.clear();
+        }
+        // Info panel
+        function showInfo(obj) {
+            let info = '';
+            if (Array.isArray(obj)) {
+                info += `<strong>Type:</strong> Array<br><strong>Length:</strong> ${obj.length}`;
+            } else if (typeof obj === 'object' && obj !== null) {
+                const keys = Object.keys(obj);
+                info += `<strong>Type:</strong> Object<br><strong>Keys:</strong> ${keys.length}`;
+                if (keys.length) {
+                    info += `<br><strong>Top keys:</strong> ${keys.slice(0, 5).join(', ')}`;
+                }
+            } else {
+                info += `<strong>Type:</strong> ${typeof obj}`;
+            }
+            infoPanel.innerHTML = info;
+            infoPanel.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
