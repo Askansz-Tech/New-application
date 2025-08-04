@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>QR Code Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        .qr-tool-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .qr-tool-container h1 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .qr-tool-container button, .qr-tool-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .qr-tool-container button {
+            background: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+        }
+        .qr-tool-container button:hover {
+            background: var(--accent-color);
+            transform: scale(1.02);
+        }
+        .qr-code-output {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .qr-code-output canvas {
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-subtle);
+        }
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        .back-button i {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-tool-container">
+        <!-- Back Button -->
+        <a href="../../tools.html" class="back-button">
+            <i class="ri-arrow-left-line"></i> Back to Tools
+        </a>
+
+        <!-- QR Code Tool Header -->
+        <h1><i class="ri-qr-code-line"></i> QR Code Tool</h1>
+
+        <!-- QR Code Maker Section -->
+        <div id="create-section">
+            <h2>Create QR Code</h2>
+            <input type="text" id="qr-input" placeholder="Enter text or URL to generate QR code">
+            <button onclick="generateQRCode()">Generate QR Code</button>
+            <div class="qr-code-output" id="qr-code-output"></div>
+            <button id="download-btn" style="display: none;" onclick="downloadQRCode()">Download QR Code</button>
+        </div>
+    </div>
+
+    <script>
+        // QR Code Generator
+        function generateQRCode() {
+            const input = document.getElementById('qr-input').value;
+            const output = document.getElementById('qr-code-output');
+            const downloadBtn = document.getElementById('download-btn');
+            output.innerHTML = ''; // Clear previous QR code
+            downloadBtn.style.display = 'none'; // Hide download button initially
+
+            if (input) {
+                QRCode.toCanvas(input, { width: 200 }, function (error, canvas) {
+                    if (error) {
+                        console.error(error);
+                        return;
+                    }
+                    output.appendChild(canvas);
+                    downloadBtn.style.display = 'block'; // Show download button
+                });
+            } else {
+                alert('Please enter text or a URL to generate a QR code.');
+            }
+        }
+
+        // Download QR Code
+        function downloadQRCode() {
+            const canvas = document.querySelector('#qr-code-output canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'qr-code.png';
+                link.click();
+            } else {
+                alert('No QR code available to download.');
+            }
+        }
+    </script>
+</body>
+</html>
